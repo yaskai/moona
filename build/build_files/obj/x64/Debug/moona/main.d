@@ -1,6 +1,4 @@
 obj/x64/Debug/moona/main.o: ../../src/main.cpp /usr/include/stdc-predef.h \
- ../external/raylib-master/src/raylib.h \
- /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdarg.h \
  /usr/include/c++/14.2.1/cstring /usr/include/c++/14.2.1/bits/version.h \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
@@ -13,8 +11,10 @@ obj/x64/Debug/moona/main.o: ../../src/main.cpp /usr/include/stdc-predef.h \
  /usr/include/bits/libc-header-start.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stddef.h \
  /usr/include/bits/types/locale_t.h /usr/include/bits/types/__locale_t.h \
- /usr/include/strings.h ../../src/include/resource_dir.h \
- ../../src/tilemap.hpp /usr/include/c++/14.2.1/string \
+ /usr/include/strings.h ../external/raylib-master/src/raylib.h \
+ /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdarg.h \
+ ../../src/include/resource_dir.h ../../src/tilemap.hpp \
+ /usr/include/c++/14.2.1/string \
  /usr/include/c++/14.2.1/bits/requires_hosted.h \
  /usr/include/c++/14.2.1/bits/stringfwd.h \
  /usr/include/c++/14.2.1/bits/memoryfwd.h \
@@ -103,10 +103,9 @@ obj/x64/Debug/moona/main.o: ../../src/main.cpp /usr/include/stdc-predef.h \
  /usr/include/c++/14.2.1/cstddef \
  /usr/include/c++/14.2.1/bits/uses_allocator.h \
  /usr/include/c++/14.2.1/bits/uses_allocator_args.h \
- /usr/include/c++/14.2.1/tuple
+ /usr/include/c++/14.2.1/tuple ../../src/player.hpp \
+ ../../src/spritesheet.hpp
 /usr/include/stdc-predef.h:
-../external/raylib-master/src/raylib.h:
-/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdarg.h:
 /usr/include/c++/14.2.1/cstring:
 /usr/include/c++/14.2.1/bits/version.h:
 /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h:
@@ -127,6 +126,8 @@ obj/x64/Debug/moona/main.o: ../../src/main.cpp /usr/include/stdc-predef.h \
 /usr/include/bits/types/locale_t.h:
 /usr/include/bits/types/__locale_t.h:
 /usr/include/strings.h:
+../external/raylib-master/src/raylib.h:
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdarg.h:
 ../../src/include/resource_dir.h:
 ../../src/tilemap.hpp:
 /usr/include/c++/14.2.1/string:
@@ -250,3 +251,5 @@ obj/x64/Debug/moona/main.o: ../../src/main.cpp /usr/include/stdc-predef.h \
 /usr/include/c++/14.2.1/bits/uses_allocator.h:
 /usr/include/c++/14.2.1/bits/uses_allocator_args.h:
 /usr/include/c++/14.2.1/tuple:
+../../src/player.hpp:
+../../src/spritesheet.hpp:

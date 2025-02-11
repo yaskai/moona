@@ -3,7 +3,13 @@
 #include <sys/types.h>
 #include "raylib.h"
 #include "spritesheet.hpp"
-#include "tilemap.hpp"
+#include "tilemap.hpp" 
+
+// Set axis deadzones
+const float leftStickDeadzoneX = 0.1f;
+const float leftStickDeadzoneY = 0.1f;
+const float rightStickDeadzoneX = 0.1f;
+const float rightStickDeadzoneY = 0.1f;
 
 enum PLAYER_STATE : u_int8_t {
 	PLAYER_IDLE,
@@ -25,7 +31,7 @@ public:
 	Tilemap *_tilemap;
 	
 	void Init(Tilemap *tilemap, Spritesheet *ss, Camera2D *cam);
-	void Update();	// Called once every frame
+	void Update(float delta);	// Called once every frame
 	void Draw();	// Called once every frame, after Update()
 private:
 	void Collision();

@@ -176,9 +176,11 @@ GENERATED :=
 OBJECTS :=
 
 GENERATED += $(OBJDIR)/main.o
+GENERATED += $(OBJDIR)/player.o
 GENERATED += $(OBJDIR)/spritesheet.o
 GENERATED += $(OBJDIR)/tilemap.o
 OBJECTS += $(OBJDIR)/main.o
+OBJECTS += $(OBJDIR)/player.o
 OBJECTS += $(OBJDIR)/spritesheet.o
 OBJECTS += $(OBJDIR)/tilemap.o
 
@@ -245,6 +247,9 @@ endif
 # #############################################
 
 $(OBJDIR)/main.o: ../../src/main.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/player.o: ../../src/player.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/spritesheet.o: ../../src/spritesheet.cpp
