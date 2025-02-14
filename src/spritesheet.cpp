@@ -1,9 +1,9 @@
 #include <stdlib.h>
-#include <sys/types.h>
+#include <cstdint>
 #include "raylib.h"
 #include "spritesheet.hpp"
 
-Spritesheet MakeSpritesheet(u_int8_t w, u_int8_t h, Texture2D texture) {
+Spritesheet MakeSpritesheet(uint8_t w, uint8_t h, Texture2D texture) {
 	Spritesheet spritesheet;
 
 	spritesheet.texture = texture;
@@ -17,9 +17,9 @@ Spritesheet MakeSpritesheet(u_int8_t w, u_int8_t h, Texture2D texture) {
 	
 	spritesheet.frame_rec = (Rectangle*)malloc(sizeof(Rectangle) * spritesheet.frame_count);
 
-	for(u_int8_t i = 0; i < spritesheet.frame_count; i++) {
-		u_int8_t c = i % spritesheet.cols;
-		u_int8_t r = i / spritesheet.cols;
+	for(uint8_t i = 0; i < spritesheet.frame_count; i++) {
+		uint8_t c = i % spritesheet.cols;
+		uint8_t r = i / spritesheet.cols;
 
 		spritesheet.frame_rec[i] = (Rectangle) {
 			(float)c * spritesheet.frame_w,
@@ -37,11 +37,11 @@ void SpritesheetClose(Spritesheet *spritesheet) {
 	UnloadTexture(spritesheet->texture);
 }
 
-u_int8_t FrameIndex(Spritesheet *spritesheet, u_int8_t c, u_int8_t r) {
+uint8_t FrameIndex(Spritesheet *spritesheet, uint8_t c, uint8_t r) {
 	return c + r * spritesheet->cols;
 }
 
-void DrawSprite(Spritesheet *spritesheet, Vector2 position, u_int8_t index, float alpha) {
+void DrawSprite(Spritesheet *spritesheet, Vector2 position, uint8_t index, float alpha) {
 	DrawTextureRec(spritesheet->texture, spritesheet->frame_rec[index], position, ColorAlpha(WHITE, alpha));
 }
 

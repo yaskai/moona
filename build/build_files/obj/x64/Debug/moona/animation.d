@@ -1,6 +1,5 @@
-obj/x64/Debug/moona/spritesheet.o: ../../src/spritesheet.cpp \
- /usr/include/stdc-predef.h /usr/include/c++/14.2.1/stdlib.h \
- /usr/include/c++/14.2.1/cstdlib \
+obj/x64/Debug/moona/animation.o: ../../src/animation.cpp \
+ /usr/include/stdc-predef.h /usr/include/c++/14.2.1/cstdlib \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -30,15 +29,14 @@ obj/x64/Debug/moona/spritesheet.o: ../../src/spritesheet.cpp \
  /usr/include/bits/atomic_wide_counter.h /usr/include/bits/struct_mutex.h \
  /usr/include/bits/struct_rwlock.h /usr/include/alloca.h \
  /usr/include/bits/stdlib-float.h /usr/include/c++/14.2.1/bits/std_abs.h \
- /usr/include/c++/14.2.1/cstdint \
+ ../external/raylib-master/src/raylib.h \
+ /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdarg.h \
+ ../../src/animation.hpp /usr/include/c++/14.2.1/cstdint \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdint.h \
  /usr/include/stdint.h /usr/include/bits/wchar.h \
  /usr/include/bits/stdint-uintn.h /usr/include/bits/stdint-least.h \
- ../external/raylib-master/src/raylib.h \
- /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdarg.h \
  ../../src/spritesheet.hpp
 /usr/include/stdc-predef.h:
-/usr/include/c++/14.2.1/stdlib.h:
 /usr/include/c++/14.2.1/cstdlib:
 /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h:
 /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/os_defines.h:
@@ -90,12 +88,13 @@ obj/x64/Debug/moona/spritesheet.o: ../../src/spritesheet.cpp \
 /usr/include/alloca.h:
 /usr/include/bits/stdlib-float.h:
 /usr/include/c++/14.2.1/bits/std_abs.h:
+../external/raylib-master/src/raylib.h:
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdarg.h:
+../../src/animation.hpp:
 /usr/include/c++/14.2.1/cstdint:
 /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdint.h:
 /usr/include/stdint.h:
 /usr/include/bits/wchar.h:
 /usr/include/bits/stdint-uintn.h:
 /usr/include/bits/stdint-least.h:
-../external/raylib-master/src/raylib.h:
-/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdarg.h:
 ../../src/spritesheet.hpp:

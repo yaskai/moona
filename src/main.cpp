@@ -1,4 +1,5 @@
 #include <cstring>
+#include "animation.hpp"
 #include "raylib.h"
 #include "include/resource_dir.h"
 #include "spritesheet.hpp"
@@ -10,10 +11,10 @@ int main () {
 
 	int ww = 1920;
 	int wh = 1080;
-	//int fps = 100;
+	int fps = 100;
 
 	InitWindow(ww, wh, "Raylib Project");
-	//SetTargetFPS(fps);
+	SetTargetFPS(fps);
 
 	SearchAndSetResourceDir("resources");
 
@@ -36,12 +37,16 @@ int main () {
 
 	Player player;
 	player.Init(&tilemap, NULL, &cam);
+
+	Spritesheet butter_ss = MakeSpritesheet(128, 64, LoadTexture("buttah_sheet01.png"));
+	Animation butter_anim = MakeAnimation(butter_ss.cols - 1, 0, true, 30, &butter_ss);
 	
 	while (!WindowShouldClose()) {
 		// Update logic
 		float delta = GetFrameTime() * 100;	
 		
 		player.Update(delta);
+		PlayAnimation(&butter_anim);
 
 		// Draw
 		BeginDrawing();
@@ -52,11 +57,15 @@ int main () {
 				player.Draw();
 			EndMode2D();
 
+			DrawAnimation(&butter_anim, {100, 100});
+
 		EndDrawing();
 	}
 
 	TilemapClose(&tilemap);
 	SpritesheetClose(&tile_ss);
+	SpritesheetClose(&butter_ss);
+	CloseAnimation(&butter_anim);
 
 	CloseWindow();
 	return 0;
