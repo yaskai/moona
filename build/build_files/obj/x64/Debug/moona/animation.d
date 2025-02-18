@@ -1,5 +1,5 @@
 obj/x64/Debug/moona/animation.o: ../../src/animation.cpp \
- /usr/include/stdc-predef.h /usr/include/c++/14.2.1/cstdlib \
+ /usr/include/stdc-predef.h /usr/include/c++/14.2.1/cstdint \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -7,17 +7,21 @@ obj/x64/Debug/moona/animation.o: ../../src/animation.cpp \
  /usr/include/sys/cdefs.h /usr/include/bits/long-double.h \
  /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/cpu_defines.h \
- /usr/include/c++/14.2.1/pstl/pstl_config.h /usr/include/stdlib.h \
- /usr/include/bits/libc-header-start.h \
+ /usr/include/c++/14.2.1/pstl/pstl_config.h \
+ /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdint.h \
+ /usr/include/stdint.h /usr/include/bits/libc-header-start.h \
+ /usr/include/bits/types.h /usr/include/bits/typesizes.h \
+ /usr/include/bits/time64.h /usr/include/bits/wchar.h \
+ /usr/include/bits/stdint-intn.h /usr/include/bits/stdint-uintn.h \
+ /usr/include/bits/stdint-least.h /usr/include/c++/14.2.1/cstdlib \
+ /usr/include/stdlib.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stddef.h \
  /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
  /usr/include/bits/floatn.h /usr/include/bits/floatn-common.h \
  /usr/include/bits/types/locale_t.h /usr/include/bits/types/__locale_t.h \
- /usr/include/sys/types.h /usr/include/bits/types.h \
- /usr/include/bits/typesizes.h /usr/include/bits/time64.h \
- /usr/include/bits/types/clock_t.h /usr/include/bits/types/clockid_t.h \
- /usr/include/bits/types/time_t.h /usr/include/bits/types/timer_t.h \
- /usr/include/bits/stdint-intn.h /usr/include/endian.h \
+ /usr/include/sys/types.h /usr/include/bits/types/clock_t.h \
+ /usr/include/bits/types/clockid_t.h /usr/include/bits/types/time_t.h \
+ /usr/include/bits/types/timer_t.h /usr/include/endian.h \
  /usr/include/bits/endian.h /usr/include/bits/endianness.h \
  /usr/include/bits/byteswap.h /usr/include/bits/uintn-identity.h \
  /usr/include/sys/select.h /usr/include/bits/select.h \
@@ -31,13 +35,9 @@ obj/x64/Debug/moona/animation.o: ../../src/animation.cpp \
  /usr/include/bits/stdlib-float.h /usr/include/c++/14.2.1/bits/std_abs.h \
  ../external/raylib-master/src/raylib.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdarg.h \
- ../../src/animation.hpp /usr/include/c++/14.2.1/cstdint \
- /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdint.h \
- /usr/include/stdint.h /usr/include/bits/wchar.h \
- /usr/include/bits/stdint-uintn.h /usr/include/bits/stdint-least.h \
- ../../src/spritesheet.hpp
+ ../../src/animation.hpp ../../src/spritesheet.hpp
 /usr/include/stdc-predef.h:
-/usr/include/c++/14.2.1/cstdlib:
+/usr/include/c++/14.2.1/cstdint:
 /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h:
 /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/os_defines.h:
 /usr/include/features.h:
@@ -50,8 +50,18 @@ obj/x64/Debug/moona/animation.o: ../../src/animation.cpp \
 /usr/include/gnu/stubs-64.h:
 /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/cpu_defines.h:
 /usr/include/c++/14.2.1/pstl/pstl_config.h:
-/usr/include/stdlib.h:
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdint.h:
+/usr/include/stdint.h:
 /usr/include/bits/libc-header-start.h:
+/usr/include/bits/types.h:
+/usr/include/bits/typesizes.h:
+/usr/include/bits/time64.h:
+/usr/include/bits/wchar.h:
+/usr/include/bits/stdint-intn.h:
+/usr/include/bits/stdint-uintn.h:
+/usr/include/bits/stdint-least.h:
+/usr/include/c++/14.2.1/cstdlib:
+/usr/include/stdlib.h:
 /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stddef.h:
 /usr/include/bits/waitflags.h:
 /usr/include/bits/waitstatus.h:
@@ -60,14 +70,10 @@ obj/x64/Debug/moona/animation.o: ../../src/animation.cpp \
 /usr/include/bits/types/locale_t.h:
 /usr/include/bits/types/__locale_t.h:
 /usr/include/sys/types.h:
-/usr/include/bits/types.h:
-/usr/include/bits/typesizes.h:
-/usr/include/bits/time64.h:
 /usr/include/bits/types/clock_t.h:
 /usr/include/bits/types/clockid_t.h:
 /usr/include/bits/types/time_t.h:
 /usr/include/bits/types/timer_t.h:
-/usr/include/bits/stdint-intn.h:
 /usr/include/endian.h:
 /usr/include/bits/endian.h:
 /usr/include/bits/endianness.h:
@@ -91,10 +97,4 @@ obj/x64/Debug/moona/animation.o: ../../src/animation.cpp \
 ../external/raylib-master/src/raylib.h:
 /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdarg.h:
 ../../src/animation.hpp:
-/usr/include/c++/14.2.1/cstdint:
-/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdint.h:
-/usr/include/stdint.h:
-/usr/include/bits/wchar.h:
-/usr/include/bits/stdint-uintn.h:
-/usr/include/bits/stdint-least.h:
 ../../src/spritesheet.hpp:

@@ -176,12 +176,18 @@ GENERATED :=
 OBJECTS :=
 
 GENERATED += $(OBJDIR)/animation.o
+GENERATED += $(OBJDIR)/enemy.o
+GENERATED += $(OBJDIR)/handler.o
 GENERATED += $(OBJDIR)/main.o
+GENERATED += $(OBJDIR)/pickup.o
 GENERATED += $(OBJDIR)/player.o
 GENERATED += $(OBJDIR)/spritesheet.o
 GENERATED += $(OBJDIR)/tilemap.o
 OBJECTS += $(OBJDIR)/animation.o
+OBJECTS += $(OBJDIR)/enemy.o
+OBJECTS += $(OBJDIR)/handler.o
 OBJECTS += $(OBJDIR)/main.o
+OBJECTS += $(OBJDIR)/pickup.o
 OBJECTS += $(OBJDIR)/player.o
 OBJECTS += $(OBJDIR)/spritesheet.o
 OBJECTS += $(OBJDIR)/tilemap.o
@@ -251,7 +257,16 @@ endif
 $(OBJDIR)/animation.o: ../../src/animation.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/enemy.o: ../../src/enemy.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/handler.o: ../../src/handler.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/main.o: ../../src/main.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/pickup.o: ../../src/pickup.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/player.o: ../../src/player.cpp

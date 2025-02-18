@@ -148,8 +148,10 @@ obj/x64/Debug/moona/tilemap.o: ../../src/tilemap.cpp \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/basic_file.h \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++io.h \
  /usr/include/c++/14.2.1/bits/fstream.tcc \
- /usr/include/c++/14.2.1/iostream ../external/raylib-master/src/raylib.h \
- ../../src/spritesheet.hpp ../../src/tilemap.hpp
+ /usr/include/c++/14.2.1/iostream ../../src/enemy.hpp \
+ ../../src/animation.hpp ../external/raylib-master/src/raylib.h \
+ ../../src/spritesheet.hpp ../../src/tilemap.hpp ../../src/pickup.hpp \
+ ../../src/handler.hpp ../../src/player.hpp
 /usr/include/stdc-predef.h:
 /usr/include/c++/14.2.1/cstdint:
 /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h:
@@ -359,6 +361,11 @@ obj/x64/Debug/moona/tilemap.o: ../../src/tilemap.cpp \
 /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++io.h:
 /usr/include/c++/14.2.1/bits/fstream.tcc:
 /usr/include/c++/14.2.1/iostream:
+../../src/enemy.hpp:
+../../src/animation.hpp:
 ../external/raylib-master/src/raylib.h:
 ../../src/spritesheet.hpp:
 ../../src/tilemap.hpp:
+../../src/pickup.hpp:
+../../src/handler.hpp:
+../../src/player.hpp:

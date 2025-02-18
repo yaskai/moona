@@ -54,24 +54,58 @@ obj/x64/Debug/moona/player.o: ../../src/player.cpp \
  /usr/include/bits/types/__fpos64_t.h /usr/include/bits/types/__FILE.h \
  /usr/include/bits/types/FILE.h /usr/include/bits/types/struct_FILE.h \
  /usr/include/bits/types/cookie_io_functions_t.h \
- /usr/include/bits/stdio_lim.h ../external/raylib-master/src/raylib.h \
- ../../src/tilemap.hpp /usr/include/c++/14.2.1/string \
+ /usr/include/bits/stdio_lim.h ../../src/animation.hpp \
+ ../external/raylib-master/src/raylib.h ../../src/spritesheet.hpp \
+ ../external/raylib-master/src/raymath.h /usr/include/c++/14.2.1/math.h \
+ /usr/include/c++/14.2.1/cmath \
  /usr/include/c++/14.2.1/bits/requires_hosted.h \
- /usr/include/c++/14.2.1/bits/stringfwd.h \
+ /usr/include/c++/14.2.1/bits/cpp_type_traits.h \
+ /usr/include/c++/14.2.1/bits/version.h \
+ /usr/include/c++/14.2.1/ext/type_traits.h /usr/include/math.h \
+ /usr/include/bits/math-vector.h /usr/include/bits/libm-simd-decl-stubs.h \
+ /usr/include/bits/flt-eval-method.h /usr/include/bits/fp-logb.h \
+ /usr/include/bits/fp-fast.h /usr/include/bits/mathcalls-macros.h \
+ /usr/include/bits/mathcalls-helper-functions.h \
+ /usr/include/bits/mathcalls.h /usr/include/bits/mathcalls-narrow.h \
+ /usr/include/bits/iscanonical.h /usr/include/c++/14.2.1/bits/specfun.h \
+ /usr/include/c++/14.2.1/bits/stl_algobase.h \
+ /usr/include/c++/14.2.1/bits/functexcept.h \
+ /usr/include/c++/14.2.1/bits/exception_defines.h \
+ /usr/include/c++/14.2.1/ext/numeric_traits.h \
+ /usr/include/c++/14.2.1/bits/stl_pair.h \
+ /usr/include/c++/14.2.1/type_traits /usr/include/c++/14.2.1/bits/move.h \
+ /usr/include/c++/14.2.1/bits/utility.h \
+ /usr/include/c++/14.2.1/bits/stl_iterator_base_types.h \
+ /usr/include/c++/14.2.1/bits/stl_iterator_base_funcs.h \
+ /usr/include/c++/14.2.1/bits/concept_check.h \
+ /usr/include/c++/14.2.1/debug/assertions.h \
+ /usr/include/c++/14.2.1/bits/stl_iterator.h \
+ /usr/include/c++/14.2.1/bits/ptr_traits.h \
+ /usr/include/c++/14.2.1/debug/debug.h \
+ /usr/include/c++/14.2.1/bits/predefined_ops.h \
+ /usr/include/c++/14.2.1/bit /usr/include/c++/14.2.1/concepts \
+ /usr/include/c++/14.2.1/limits /usr/include/c++/14.2.1/tr1/gamma.tcc \
+ /usr/include/c++/14.2.1/tr1/special_function_util.h \
+ /usr/include/c++/14.2.1/tr1/bessel_function.tcc \
+ /usr/include/c++/14.2.1/tr1/beta_function.tcc \
+ /usr/include/c++/14.2.1/tr1/ell_integral.tcc \
+ /usr/include/c++/14.2.1/tr1/exp_integral.tcc \
+ /usr/include/c++/14.2.1/tr1/hypergeometric.tcc \
+ /usr/include/c++/14.2.1/tr1/legendre_function.tcc \
+ /usr/include/c++/14.2.1/tr1/modified_bessel_func.tcc \
+ /usr/include/c++/14.2.1/tr1/poly_hermite.tcc \
+ /usr/include/c++/14.2.1/tr1/poly_laguerre.tcc \
+ /usr/include/c++/14.2.1/tr1/riemann_zeta.tcc ../../src/tilemap.hpp \
+ /usr/include/c++/14.2.1/string /usr/include/c++/14.2.1/bits/stringfwd.h \
  /usr/include/c++/14.2.1/bits/memoryfwd.h \
  /usr/include/c++/14.2.1/bits/char_traits.h \
  /usr/include/c++/14.2.1/bits/postypes.h /usr/include/c++/14.2.1/cwchar \
  /usr/include/wchar.h /usr/include/bits/types/wint_t.h \
- /usr/include/bits/types/mbstate_t.h /usr/include/c++/14.2.1/type_traits \
- /usr/include/c++/14.2.1/bits/version.h \
+ /usr/include/bits/types/mbstate_t.h \
  /usr/include/c++/14.2.1/bits/allocator.h \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++allocator.h \
  /usr/include/c++/14.2.1/bits/new_allocator.h /usr/include/c++/14.2.1/new \
  /usr/include/c++/14.2.1/bits/exception.h \
- /usr/include/c++/14.2.1/bits/functexcept.h \
- /usr/include/c++/14.2.1/bits/exception_defines.h \
- /usr/include/c++/14.2.1/bits/move.h \
- /usr/include/c++/14.2.1/bits/cpp_type_traits.h \
  /usr/include/c++/14.2.1/bits/localefwd.h \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++locale.h \
  /usr/include/c++/14.2.1/clocale /usr/include/locale.h \
@@ -79,22 +113,8 @@ obj/x64/Debug/moona/player.o: ../../src/player.cpp \
  /usr/include/c++/14.2.1/cctype /usr/include/ctype.h \
  /usr/include/c++/14.2.1/bits/ostream_insert.h \
  /usr/include/c++/14.2.1/bits/cxxabi_forced.h \
- /usr/include/c++/14.2.1/bits/stl_iterator_base_funcs.h \
- /usr/include/c++/14.2.1/bits/concept_check.h \
- /usr/include/c++/14.2.1/debug/assertions.h \
- /usr/include/c++/14.2.1/bits/stl_iterator_base_types.h \
- /usr/include/c++/14.2.1/bits/stl_iterator.h \
- /usr/include/c++/14.2.1/ext/type_traits.h \
- /usr/include/c++/14.2.1/bits/ptr_traits.h \
  /usr/include/c++/14.2.1/bits/stl_function.h \
  /usr/include/c++/14.2.1/backward/binders.h \
- /usr/include/c++/14.2.1/ext/numeric_traits.h \
- /usr/include/c++/14.2.1/bits/stl_algobase.h \
- /usr/include/c++/14.2.1/bits/stl_pair.h \
- /usr/include/c++/14.2.1/bits/utility.h \
- /usr/include/c++/14.2.1/debug/debug.h \
- /usr/include/c++/14.2.1/bits/predefined_ops.h \
- /usr/include/c++/14.2.1/bit /usr/include/c++/14.2.1/concepts \
  /usr/include/c++/14.2.1/bits/refwrap.h \
  /usr/include/c++/14.2.1/bits/invoke.h \
  /usr/include/c++/14.2.1/bits/range_access.h \
@@ -118,8 +138,8 @@ obj/x64/Debug/moona/player.o: ../../src/player.cpp \
  /usr/include/c++/14.2.1/cstddef \
  /usr/include/c++/14.2.1/bits/uses_allocator.h \
  /usr/include/c++/14.2.1/bits/uses_allocator_args.h \
- /usr/include/c++/14.2.1/tuple ../../src/spritesheet.hpp \
- ../../src/player.hpp
+ /usr/include/c++/14.2.1/tuple ../../src/player.hpp ../../src/handler.hpp \
+ ../../src/enemy.hpp ../../src/pickup.hpp
 /usr/include/stdc-predef.h:
 /usr/include/c++/14.2.1/csignal:
 /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h:
@@ -220,10 +240,61 @@ obj/x64/Debug/moona/player.o: ../../src/player.cpp \
 /usr/include/bits/types/struct_FILE.h:
 /usr/include/bits/types/cookie_io_functions_t.h:
 /usr/include/bits/stdio_lim.h:
+../../src/animation.hpp:
 ../external/raylib-master/src/raylib.h:
+../../src/spritesheet.hpp:
+../external/raylib-master/src/raymath.h:
+/usr/include/c++/14.2.1/math.h:
+/usr/include/c++/14.2.1/cmath:
+/usr/include/c++/14.2.1/bits/requires_hosted.h:
+/usr/include/c++/14.2.1/bits/cpp_type_traits.h:
+/usr/include/c++/14.2.1/bits/version.h:
+/usr/include/c++/14.2.1/ext/type_traits.h:
+/usr/include/math.h:
+/usr/include/bits/math-vector.h:
+/usr/include/bits/libm-simd-decl-stubs.h:
+/usr/include/bits/flt-eval-method.h:
+/usr/include/bits/fp-logb.h:
+/usr/include/bits/fp-fast.h:
+/usr/include/bits/mathcalls-macros.h:
+/usr/include/bits/mathcalls-helper-functions.h:
+/usr/include/bits/mathcalls.h:
+/usr/include/bits/mathcalls-narrow.h:
+/usr/include/bits/iscanonical.h:
+/usr/include/c++/14.2.1/bits/specfun.h:
+/usr/include/c++/14.2.1/bits/stl_algobase.h:
+/usr/include/c++/14.2.1/bits/functexcept.h:
+/usr/include/c++/14.2.1/bits/exception_defines.h:
+/usr/include/c++/14.2.1/ext/numeric_traits.h:
+/usr/include/c++/14.2.1/bits/stl_pair.h:
+/usr/include/c++/14.2.1/type_traits:
+/usr/include/c++/14.2.1/bits/move.h:
+/usr/include/c++/14.2.1/bits/utility.h:
+/usr/include/c++/14.2.1/bits/stl_iterator_base_types.h:
+/usr/include/c++/14.2.1/bits/stl_iterator_base_funcs.h:
+/usr/include/c++/14.2.1/bits/concept_check.h:
+/usr/include/c++/14.2.1/debug/assertions.h:
+/usr/include/c++/14.2.1/bits/stl_iterator.h:
+/usr/include/c++/14.2.1/bits/ptr_traits.h:
+/usr/include/c++/14.2.1/debug/debug.h:
+/usr/include/c++/14.2.1/bits/predefined_ops.h:
+/usr/include/c++/14.2.1/bit:
+/usr/include/c++/14.2.1/concepts:
+/usr/include/c++/14.2.1/limits:
+/usr/include/c++/14.2.1/tr1/gamma.tcc:
+/usr/include/c++/14.2.1/tr1/special_function_util.h:
+/usr/include/c++/14.2.1/tr1/bessel_function.tcc:
+/usr/include/c++/14.2.1/tr1/beta_function.tcc:
+/usr/include/c++/14.2.1/tr1/ell_integral.tcc:
+/usr/include/c++/14.2.1/tr1/exp_integral.tcc:
+/usr/include/c++/14.2.1/tr1/hypergeometric.tcc:
+/usr/include/c++/14.2.1/tr1/legendre_function.tcc:
+/usr/include/c++/14.2.1/tr1/modified_bessel_func.tcc:
+/usr/include/c++/14.2.1/tr1/poly_hermite.tcc:
+/usr/include/c++/14.2.1/tr1/poly_laguerre.tcc:
+/usr/include/c++/14.2.1/tr1/riemann_zeta.tcc:
 ../../src/tilemap.hpp:
 /usr/include/c++/14.2.1/string:
-/usr/include/c++/14.2.1/bits/requires_hosted.h:
 /usr/include/c++/14.2.1/bits/stringfwd.h:
 /usr/include/c++/14.2.1/bits/memoryfwd.h:
 /usr/include/c++/14.2.1/bits/char_traits.h:
@@ -232,17 +303,11 @@ obj/x64/Debug/moona/player.o: ../../src/player.cpp \
 /usr/include/wchar.h:
 /usr/include/bits/types/wint_t.h:
 /usr/include/bits/types/mbstate_t.h:
-/usr/include/c++/14.2.1/type_traits:
-/usr/include/c++/14.2.1/bits/version.h:
 /usr/include/c++/14.2.1/bits/allocator.h:
 /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++allocator.h:
 /usr/include/c++/14.2.1/bits/new_allocator.h:
 /usr/include/c++/14.2.1/new:
 /usr/include/c++/14.2.1/bits/exception.h:
-/usr/include/c++/14.2.1/bits/functexcept.h:
-/usr/include/c++/14.2.1/bits/exception_defines.h:
-/usr/include/c++/14.2.1/bits/move.h:
-/usr/include/c++/14.2.1/bits/cpp_type_traits.h:
 /usr/include/c++/14.2.1/bits/localefwd.h:
 /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++locale.h:
 /usr/include/c++/14.2.1/clocale:
@@ -253,23 +318,8 @@ obj/x64/Debug/moona/player.o: ../../src/player.cpp \
 /usr/include/ctype.h:
 /usr/include/c++/14.2.1/bits/ostream_insert.h:
 /usr/include/c++/14.2.1/bits/cxxabi_forced.h:
-/usr/include/c++/14.2.1/bits/stl_iterator_base_funcs.h:
-/usr/include/c++/14.2.1/bits/concept_check.h:
-/usr/include/c++/14.2.1/debug/assertions.h:
-/usr/include/c++/14.2.1/bits/stl_iterator_base_types.h:
-/usr/include/c++/14.2.1/bits/stl_iterator.h:
-/usr/include/c++/14.2.1/ext/type_traits.h:
-/usr/include/c++/14.2.1/bits/ptr_traits.h:
 /usr/include/c++/14.2.1/bits/stl_function.h:
 /usr/include/c++/14.2.1/backward/binders.h:
-/usr/include/c++/14.2.1/ext/numeric_traits.h:
-/usr/include/c++/14.2.1/bits/stl_algobase.h:
-/usr/include/c++/14.2.1/bits/stl_pair.h:
-/usr/include/c++/14.2.1/bits/utility.h:
-/usr/include/c++/14.2.1/debug/debug.h:
-/usr/include/c++/14.2.1/bits/predefined_ops.h:
-/usr/include/c++/14.2.1/bit:
-/usr/include/c++/14.2.1/concepts:
 /usr/include/c++/14.2.1/bits/refwrap.h:
 /usr/include/c++/14.2.1/bits/invoke.h:
 /usr/include/c++/14.2.1/bits/range_access.h:
@@ -298,5 +348,7 @@ obj/x64/Debug/moona/player.o: ../../src/player.cpp \
 /usr/include/c++/14.2.1/bits/uses_allocator.h:
 /usr/include/c++/14.2.1/bits/uses_allocator_args.h:
 /usr/include/c++/14.2.1/tuple:
-../../src/spritesheet.hpp:
 ../../src/player.hpp:
+../../src/handler.hpp:
+../../src/enemy.hpp:
+../../src/pickup.hpp:

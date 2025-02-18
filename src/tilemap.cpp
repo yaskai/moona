@@ -6,9 +6,18 @@
 #include <stdint.h>
 #include <sys/types.h>
 #include <string>
+#include "enemy.hpp"
 #include "raylib.h"
 #include "spritesheet.hpp"
 #include "tilemap.hpp"
+#include "pickup.hpp"
+#include "handler.hpp"
+
+Handler *tmHandler;
+void TilemapSetHandler(Handler *handler) { tmHandler = handler; }
+
+uint8_t pickup_count = 0;
+uint8_t enemy_count = 0;
 
 void TilemapInit(Tilemap *tilemap, Camera2D *cam, Spritesheet *ss) {
 	tilemap->width = 128;
@@ -16,7 +25,7 @@ void TilemapInit(Tilemap *tilemap, Camera2D *cam, Spritesheet *ss) {
 	tilemap->tile_count = tilemap->width * tilemap->height;	
 
 	tilemap->map_data = (char*)malloc(sizeof(char) * tilemap->tile_count);
-	tilemap->spr_idx = (u_int8_t*)malloc(sizeof(u_int8_t) * tilemap->tile_count);
+	tilemap->spr_idx = (uint8_t*)malloc(sizeof(uint8_t) * tilemap->tile_count);
 	//tilemap->solids = (Rectangle*)malloc(sizeof(Rectangle) * tilemap->tile_count);
 
 	tilemap->cam = cam;
@@ -41,17 +50,14 @@ void TilemapDraw(Tilemap *tilemap) {
 
 			switch(FetchTile(tilemap, (Coords){c, r})) {
 				case TILE_BLOCK:
-					//ColorTile(tilemap, (Coords){c, r}, WHITE);
-					DrawSprite(tilemap->ss, draw_pos, tilemap->spr_idx[idx], 1.0f);
+					DrawSprite(tilemap->ss, draw_pos, tilemap->spr_idx[idx], 0);
 					break;
+
 				case TILE_DOOR:
 					break;
+				
 			}
 		}
-	}
-
-	for(uint16_t i = 0; i < tilemap->tile_count; i++) {
-		//DrawRectangleRec(tilemap->solids[i], BLUE);
 	}
 }
 
@@ -76,12 +82,12 @@ void TilemapLoad(Tilemap *tilemap, std::string path) {
 		tilemap->spr_idx = (uint8_t*)realloc(tilemap->spr_idx, sizeof(uint8_t) * tilemap->tile_count); 
 		//tilemap->solids = (Rectangle*)realloc(tilemap->solids, sizeof(Rectangle) * tilemap->tile_count); 
 		
-		for(u_int8_t r = 0; r < tilemap->height; r++) {
+		for(uint8_t r = 0; r < tilemap->height; r++) {
 			std::string line;	
 			std::getline(file, line);
 			std::cout << line << std::endl;
 
-			for(u_int8_t c = 0; c < tilemap->width; c++) {
+			for(uint8_t c = 0; c < tilemap->width; c++) {
 				int idx = CoordsToIndex(tilemap, (Coords){c, r});
 				char ch = line[c];
 				tilemap->map_data[idx] = ch;
@@ -99,26 +105,28 @@ void TilemapLoad(Tilemap *tilemap, std::string path) {
 
 void TilemapGenerate(Tilemap *tilemap) {
 	for(uint16_t i = 0; i < tilemap->tile_count; i++) {
+		switch(tilemap->map_data[i]) {
+			case TILE_PICKUP: pickup_count++; break;
+			case TILE_ENEMY0: case TILE_ENEMY1: enemy_count++; break;
+		}
+	}
+
+	tmHandler->pickups = (Pickup*)malloc(sizeof(Pickup) * pickup_count);
+	tmHandler->enemies = (Enemy*)malloc(sizeof(Enemy) * enemy_count);
+
+	for(uint16_t i = 0; i < tilemap->tile_count; i++) {
 		uint16_t c = i % tilemap->width;
 		uint16_t r = i / tilemap->width;
-		
-		/*
-		if(tilemap->map_data[i] == '1') {
-			tilemap->solids[i] = (Rectangle) {
-				(float)c * TILE_SIZE,
-				(float)r * TILE_SIZE,
-				TILE_SIZE,
-				TILE_SIZE
-			};
-		}
-		*/
+
+		if(tilemap->map_data[i] == TILE_PICKUP) NewPickup(tmHandler, CoordsToVector(tilemap, {c, r}));
+		if(tilemap->map_data[i] == TILE_ENEMY0) NewEnemy(tmHandler, CoordsToVector(tilemap, {c, r}), 0);
 	}
 }
 
 void TilemapUpdateSprites(Tilemap *tilemap) {
 	for(uint16_t i = 0; i < tilemap->tile_count; i++) {
-		u_int16_t c = i % tilemap->width;
-		u_int16_t r = i / tilemap->width;
+		uint16_t c = i % tilemap->width;
+		uint16_t r = i / tilemap->width;
 		tilemap->spr_idx[i] = TileGetAdj(tilemap, (Coords){c, r});
 	}
 }
