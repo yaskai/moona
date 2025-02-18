@@ -26,7 +26,6 @@ bool DECEL = false;
 float jump_release = false;
 float jump_release_timer = 0;
 
-Vector2 start_pos;
 float last_ground_y;
 
 bool boost_used = false;
@@ -89,11 +88,32 @@ void Player::Update(float delta) {
 
 	if(player_state == PLAYER_BOOST) {
 		gravity = 0.075f;
-		vel_max = {5, 5};
+		vel_max = {6.5f, 6.5f};
 		vel_min = Vector2Scale(vel_max, -1);
 
 		//velocity = Vector2Add(velocity, Vector2Scale(boost_dir, 0.75f));
-		velocity = Vector2Add(velocity, Vector2Scale(boost_facing, 0.75f));
+		velocity = Vector2Add(velocity, Vector2Scale(boost_facing, 0.25f));
+		
+		milk_rotation = boost_rotation;
+		milk_facing = boost_facing;
+		
+		
+
+		milk_start = {position.x + 32, position.y + 20};
+		milk_end = Vector2Add(milk_start, Vector2Scale(boost_facing, -5000));
+		/*
+		for(uint16_t r = _tilemap->frame_min.r; r < _tilemap->frame_max.r; r++) {
+			for(uint16_t c = _tilemap->frame_min.c; c < _tilemap->frame_max.c; c++) {
+				if(FetchTile(_tilemap, {c, r}) == '1') {
+					Vector2 tile_center = Vector2Add(CoordsToVector(_tilemap, {c, r}), {32, 32});
+					if(CheckCollisionCircleLine(tile_center, 80, milk_start,  milk_end)) {
+						milk_end = Vector2Add(milk_start, Vector2Scale(boost_facing, 
+													 Vector2Distance(milk_start, {tile_center.x - 32, tile_center.y - 32}) * -1));	
+					}
+				}
+			}
+		}
+		*/
 		
 		decel_timer = 20;
 		DECEL = false;
@@ -107,6 +127,9 @@ void Player::Update(float delta) {
 		vel_min = {-5, -15};
 		vel_max = {5, 8};
 	}
+
+	if(player_state == PLAYER_CHARGE) time_mod = 0.1f;
+	else time_mod = 1.0f;
 
 	TakeInput(delta);
 	ManageTimers(delta);
@@ -145,20 +168,11 @@ void Player::Draw() {
 			//if(boost_dir.y > 0) draw_flags |= FLIP_Y;
 			if(boost_facing.x > 0) draw_flags |= FLIP_X;
 			if(boost_facing.y > 0) draw_flags |= FLIP_Y;
-			
-			Vector2 milk_start;
-			milk_start = {draw_pos.x + 32, draw_pos.y + 32};
-
-			Vector2 milk_end;
-			//milk_end = Vector2Add(milk_start, Vector2Scale(boost_dir, -2000));
-			milk_end = Vector2Add(milk_start, Vector2Scale(boost_facing, -5000));
 
 			DrawLineEx(milk_start, milk_end, 20, RAYWHITE);
 
 			DrawSprite(_ss, draw_pos, 15, draw_flags);
 			DrawCircleLinesV(milk_start, 128, WHITE);
-			//DrawCircleV(Vector2Add(milk_start, Vector2Scale(Vector2Rotate({0, -1}, boost_rotation * DEG2RAD), 128)), 16, WHITE);
-			//DrawCircleV(boost_dest_v, 16, BLUE);
 
 			float sc;
 			if(boost_dest_v.y == 0 || boost_dest_v.y == 0) sc = 128;
@@ -171,8 +185,6 @@ void Player::Draw() {
 		case PLAYER_CHARGE:
 			DrawSprite(_ss, draw_pos, 25, draw_flags);
 			DrawCircleLinesV(Vector2Add(position, {32, 32}), 128, WHITE);
-			//DrawCircleV(Vector2Add(milk_start, Vector2Scale(Vector2Rotate({0, -1}, boost_rotation * DEG2RAD), 128)), 16, WHITE);
-			//DrawCircleV(boost_dest_v, 16, BLUE);
 
 			float scb;
 			if(boost_dest_v.y == 0 || boost_dest_v.y == 0) scb = 128;
@@ -320,18 +332,6 @@ void Player::InputKB(float delta) {
 				if(velocity.x > 1) velocity.x = 1;
 				else if(velocity.x < -1) velocity.x = -1;
 				player_state = PLAYER_CHARGE;
-				/*
-				if(IsKeyDown(KEY_A)) {
-					//boost_facing = {-1, 0};
-				} else if(IsKeyDown(KEY_D)) {
-					//boost_facing = {1, 0};
-					//boost_rotation = (2 * PI);
-				} else if(IsKeyDown(KEY_W)) {
-					//boost_facing = {0, -1};
-				} else if(IsKeyDown(KEY_S)) {
-					//boost_facing = {0, 1};
-				}
-				*/
 			}
 
 			if(IsKeyReleased(KEY_ENTER) || boost_amount >= boost_max) {
@@ -347,6 +347,9 @@ void Player::InputKB(float delta) {
 					if(IsKeyDown(KEY_D)) boost_pres_v.x = 1;
 					if(IsKeyDown(KEY_W)) boost_pres_v.y = -1;
 					if(IsKeyDown(KEY_S)) boost_pres_v.y = 1;
+
+					if(IsKeyUp(KEY_A) && IsKeyUp(KEY_D)) boost_pres_v.x = 0;
+					if(IsKeyUp(KEY_W) && IsKeyUp(KEY_S)) boost_pres_v.y = 0;
 
 					player_state = PLAYER_BOOST;
 					boost_used = true;
@@ -385,8 +388,6 @@ void Player::InputKB(float delta) {
 	}
 
 	if(player_state == PLAYER_BOOST) {
-		//boost_facing = Vector2Rotate((Vector2){0, -1}, boost_rotation * DEG2RAD);
-		//boost_facing = Vector2Rotate(boost_dest_v, boost_rotation * DEG2RAD);
 		boost_facing = Vector2Rotate(boost_pres_v, boost_rotation * DEG2RAD);
 
 		if(IsKeyDown(KEY_A)) {
@@ -404,13 +405,15 @@ void Player::InputKB(float delta) {
 		if(IsKeyUp(KEY_A) && IsKeyUp(KEY_D) && IsKeyUp(KEY_W) && IsKeyUp(KEY_S)) {
 			boost_dest_v = boost_pres_v;
 		}
+
 		/*
 		if(boost_dir.x < -1) boost_dir.x = -1;
 		else if(boost_dir.x > 1) boost_dir.x = 1;
 		if(boost_dir.y < -1) boost_dir.y = -1;
 		else if(boost_dir.y > 1) boost_dir.y = 1;
 		*/
-		boost_pres_v = Vector2Lerp(boost_pres_v, boost_dest_v, delta * 0.015f);
+
+		boost_pres_v = Vector2Lerp(boost_pres_v, boost_dest_v, delta * 0.085f);
 	}
 
 	// *KEYBOARD*

@@ -5,7 +5,6 @@
 
 Spritesheet MakeSpritesheet(uint8_t w, uint8_t h, Texture2D texture) {
 	Spritesheet spritesheet;
-
 	spritesheet.texture = texture;
 	spritesheet.frame_w = w;
 	spritesheet.frame_h = h;

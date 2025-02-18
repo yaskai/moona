@@ -16,7 +16,7 @@ typedef struct {
 } Handler;
 
 void HandlerInit(Handler *handler, Tilemap *tilemap, Camera2D *cam, Player *player);
-void HandlerUpdate(Handler *handler);
+void HandlerUpdate(Handler *handler, float dt);
 void HandlerDraw(Handler *handler);
 void HandlerClose(Handler *handler);
 void ResetLevel(Handler *handler);

@@ -4,6 +4,7 @@
 #include "animation.hpp"
 #include "enemy.hpp"
 #include "pickup.hpp"
+#include "player.hpp"
 #include "spritesheet.hpp"
 
 Spritesheet pickup_ss;
@@ -11,6 +12,9 @@ Animation pickup_anim;
 
 Spritesheet alien_ss;
 Spritesheet ufo_ss;
+
+Spritesheet alien_death_ss;
+Spritesheet ufo_death_ss;
 
 uint8_t pickup_total = 0;
 uint8_t enemy_total = 0;
@@ -24,18 +28,24 @@ void HandlerInit(Handler *handler, Tilemap *tilemap, Camera2D *cam, Player *play
 
 	pickup_ss = MakeSpritesheet(96, 96, LoadTexture("flower_sheet.png"));
 	pickup_anim = MakeAnimation(12, 0, true, 10, &pickup_ss);
+
 	alien_ss = MakeSpritesheet(64, 84, LoadTexture("alien_sheet00.png"));
 	ufo_ss = MakeSpritesheet(144, 108, LoadTexture("UFO_sheet.png"));
+	
+	alien_death_ss = MakeSpritesheet(100, 100, LoadTexture("alien_death.png"));
+	ufo_death_ss = MakeSpritesheet(96, 96, LoadTexture("UFO_death.png"));
 }
 
-void HandlerUpdate(Handler *handler) {
+void HandlerUpdate(Handler *handler, float dt) {
 	cam_bounds = (Rectangle) {
 		handler->cam->target.x - handler->cam->offset.x,
 		handler->cam->target.y - handler->cam->offset.y,
 		handler->cam->offset.x * 2,
 		handler->cam->offset.y * 2
 	};
-
+	
+	if(dt >= 1.0f) pickup_anim.fps = 12;
+	else pickup_anim.fps = 12 * handler->player->time_mod;
 	PlayAnimation(&pickup_anim);
 	
 	for(uint8_t i = 0; i < pickup_total; i++) {
@@ -45,19 +55,33 @@ void HandlerUpdate(Handler *handler) {
 		if(!CheckCollisionRecs(cam_bounds, handler->pickups[i].bounds)) UPDATE = false;
 
 		if(UPDATE) {
-			if(CheckCollisionRecs(handler->player->bounds, handler->pickups[i].bounds))
+			if(CheckCollisionRecs(handler->player->bounds, handler->pickups[i].bounds)) {
+				// PICKUP FLOWER...
 				handler->pickups[i].active = false;	
+			}
 		}
 	}
 
 	for(uint8_t i = 0; i < enemy_total; i++) {
 		bool UPDATE = true;
 		if(!handler->enemies[i].active) UPDATE = false;
-		//if(!CheckCollisionRecs(cam_bounds, handler->enemies[i].bounds)) UPDATE = false;
+		if(!CheckCollisionRecs(cam_bounds, handler->enemies[i].bounds)) UPDATE = false;
 
 		if(UPDATE) { 
-			EnemyUpdate(&handler->enemies[i]);
-			EnemyCollision(&handler->enemies[i], handler->player);
+			EnemyUpdate(&handler->enemies[i], dt);
+			if(!handler->enemies[i].dead) {
+				if(handler->player->player_state == PLAYER_BOOST) {
+					if(CheckCollisionCircleLine(handler->enemies[i].position,
+								 handler->enemies[i].bounds.height,
+								 handler->player->milk_start,
+								 handler->player->milk_end)) {
+						//handler->enemies[i].dead = true;
+						EnemyDamage(&handler->enemies[i]);
+					}
+				}
+
+				EnemyCollision(&handler->enemies[i], handler->player);
+			}
 		}
 	}
 }
@@ -88,8 +112,11 @@ void HandlerClose(Handler *handler) {
 
 	for(uint8_t i = 0; i < enemy_total; i++) CloseAnimation(&handler->enemies[i].anim);
 	free(handler->enemies);
+
 	SpritesheetClose(&alien_ss);
 	SpritesheetClose(&ufo_ss);
+
+	SpritesheetClose(&ufo_death_ss);
 }
 
 void ResetLevel(Handler *handler) {
@@ -99,7 +126,11 @@ void ResetLevel(Handler *handler) {
 
 	for(uint8_t i = 0; i < enemy_total; i++) {
 		handler->enemies[i].active = true;
+		handler->enemies[i].dead = false;
 		handler->enemies[i].position = handler->enemies[i].start_position;
+		if(handler->enemies[i].type == 0) handler->enemies[i].HP = 3;
+		else handler->enemies[i].HP = 10;
+		ResetAnimation(&handler->enemies[i].death_anim);
 	}
 }
 
@@ -117,10 +148,16 @@ void NewEnemy(Handler *handler, Vector2 position, uint8_t type) {
 		enemy.anim = MakeAnimation(23, 0, true, 24, &alien_ss);
 		enemy.position.y -= 20;
 		enemy.start_position.y -= 20;
+		enemy.death_anim = MakeAnimation(15, 0, false, 20, &alien_death_ss);
+		enemy.HP = 3;
 	} else if(type == 1) {
 		enemy.ss = &ufo_ss;
 		enemy.anim = MakeAnimation(14, 0, true, 24, &ufo_ss);
+		enemy.death_anim = MakeAnimation(4, 0, false, 10, &ufo_death_ss);
+		enemy.HP = 10;
 	}
+
+	enemy.animFPS = enemy.anim.fps;
 
 	handler->enemies[enemy_total] = enemy;
 	enemy_total++;

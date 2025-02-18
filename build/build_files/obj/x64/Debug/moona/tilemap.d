@@ -150,7 +150,27 @@ obj/x64/Debug/moona/tilemap.o: ../../src/tilemap.cpp \
  /usr/include/c++/14.2.1/bits/fstream.tcc \
  /usr/include/c++/14.2.1/iostream ../../src/enemy.hpp \
  ../../src/animation.hpp ../external/raylib-master/src/raylib.h \
- ../../src/spritesheet.hpp ../../src/player.hpp ../../src/tilemap.hpp \
+ ../../src/spritesheet.hpp ../../src/player.hpp \
+ ../external/raylib-master/src/raymath.h /usr/include/c++/14.2.1/math.h \
+ /usr/include/c++/14.2.1/cmath /usr/include/math.h \
+ /usr/include/bits/math-vector.h /usr/include/bits/libm-simd-decl-stubs.h \
+ /usr/include/bits/flt-eval-method.h /usr/include/bits/fp-logb.h \
+ /usr/include/bits/fp-fast.h /usr/include/bits/mathcalls-macros.h \
+ /usr/include/bits/mathcalls-helper-functions.h \
+ /usr/include/bits/mathcalls.h /usr/include/bits/mathcalls-narrow.h \
+ /usr/include/bits/iscanonical.h /usr/include/c++/14.2.1/bits/specfun.h \
+ /usr/include/c++/14.2.1/limits /usr/include/c++/14.2.1/tr1/gamma.tcc \
+ /usr/include/c++/14.2.1/tr1/special_function_util.h \
+ /usr/include/c++/14.2.1/tr1/bessel_function.tcc \
+ /usr/include/c++/14.2.1/tr1/beta_function.tcc \
+ /usr/include/c++/14.2.1/tr1/ell_integral.tcc \
+ /usr/include/c++/14.2.1/tr1/exp_integral.tcc \
+ /usr/include/c++/14.2.1/tr1/hypergeometric.tcc \
+ /usr/include/c++/14.2.1/tr1/legendre_function.tcc \
+ /usr/include/c++/14.2.1/tr1/modified_bessel_func.tcc \
+ /usr/include/c++/14.2.1/tr1/poly_hermite.tcc \
+ /usr/include/c++/14.2.1/tr1/poly_laguerre.tcc \
+ /usr/include/c++/14.2.1/tr1/riemann_zeta.tcc ../../src/tilemap.hpp \
  ../../src/pickup.hpp ../../src/handler.hpp
 /usr/include/stdc-predef.h:
 /usr/include/c++/14.2.1/cstdint:
@@ -366,6 +386,34 @@ obj/x64/Debug/moona/tilemap.o: ../../src/tilemap.cpp \
 ../external/raylib-master/src/raylib.h:
 ../../src/spritesheet.hpp:
 ../../src/player.hpp:
+../external/raylib-master/src/raymath.h:
+/usr/include/c++/14.2.1/math.h:
+/usr/include/c++/14.2.1/cmath:
+/usr/include/math.h:
+/usr/include/bits/math-vector.h:
+/usr/include/bits/libm-simd-decl-stubs.h:
+/usr/include/bits/flt-eval-method.h:
+/usr/include/bits/fp-logb.h:
+/usr/include/bits/fp-fast.h:
+/usr/include/bits/mathcalls-macros.h:
+/usr/include/bits/mathcalls-helper-functions.h:
+/usr/include/bits/mathcalls.h:
+/usr/include/bits/mathcalls-narrow.h:
+/usr/include/bits/iscanonical.h:
+/usr/include/c++/14.2.1/bits/specfun.h:
+/usr/include/c++/14.2.1/limits:
+/usr/include/c++/14.2.1/tr1/gamma.tcc:
+/usr/include/c++/14.2.1/tr1/special_function_util.h:
+/usr/include/c++/14.2.1/tr1/bessel_function.tcc:
+/usr/include/c++/14.2.1/tr1/beta_function.tcc:
+/usr/include/c++/14.2.1/tr1/ell_integral.tcc:
+/usr/include/c++/14.2.1/tr1/exp_integral.tcc:
+/usr/include/c++/14.2.1/tr1/hypergeometric.tcc:
+/usr/include/c++/14.2.1/tr1/legendre_function.tcc:
+/usr/include/c++/14.2.1/tr1/modified_bessel_func.tcc:
+/usr/include/c++/14.2.1/tr1/poly_hermite.tcc:
+/usr/include/c++/14.2.1/tr1/poly_laguerre.tcc:
+/usr/include/c++/14.2.1/tr1/riemann_zeta.tcc:
 ../../src/tilemap.hpp:
 ../../src/pickup.hpp:
 ../../src/handler.hpp:

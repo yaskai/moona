@@ -1,9 +1,9 @@
 #pragma once
 
 #include <cstdint>
-#include <sys/types.h>
 #include "animation.hpp"
 #include "raylib.h"
+#include "raymath.h"
 #include "spritesheet.hpp"
 #include "tilemap.hpp" 
 
@@ -34,13 +34,19 @@ public:
 	u_int8_t HP;
 	enum PLAYER_STATE player_state;
 	bool on_ground;
+	float time_mod;
+	float milk_rotation;
+	Vector2 milk_facing;
+	Vector2 milk_start;
+	Vector2 milk_end;
 	Vector2 position, velocity;
+	Vector2 start_pos;
 	Coords grid_pos;
 	Rectangle bounds;
 	Camera2D *_cam;
 	Spritesheet *_ss;
 	Tilemap *_tilemap;
-	
+		
 	void Init(Tilemap *tilemap, Spritesheet *ss, Camera2D *cam);
 	void Update(float delta);	// Called once every frame
 	void Draw();	// Called once every frame, after Update()

@@ -70,10 +70,11 @@ int main () {
 	
 	while (!WindowShouldClose()) {
 		// Update logic
-		float delta = GetFrameTime() * 100;	
+		float delta = GetFrameTime() * 100;
+		float delta1 = (GetFrameTime() * 100) * player.time_mod;
 		
 		player.Update(delta);
-		HandlerUpdate(&handler);
+		HandlerUpdate(&handler, delta1);
 		player.UpdateCam(ww, wh);
 
 		// Draw

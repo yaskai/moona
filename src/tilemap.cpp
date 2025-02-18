@@ -118,6 +118,11 @@ void TilemapGenerate(Tilemap *tilemap) {
 		uint16_t c = i % tilemap->width;
 		uint16_t r = i / tilemap->width;
 
+		if(tilemap->map_data[i] == TILE_PLAYER) {
+			tmHandler->player->position = CoordsToVector(tilemap, {c, r});	
+			tmHandler->player->start_pos = CoordsToVector(tilemap, {c, r});	
+		}
+
 		if(tilemap->map_data[i] == TILE_PICKUP) NewPickup(tmHandler, CoordsToVector(tilemap, {c, r}));
 		if(tilemap->map_data[i] == TILE_ENEMY0) NewEnemy(tmHandler, CoordsToVector(tilemap, {c, r}), 0);
 		if(tilemap->map_data[i] == TILE_ENEMY1) NewEnemy(tmHandler, CoordsToVector(tilemap, {c, r}), 1);
