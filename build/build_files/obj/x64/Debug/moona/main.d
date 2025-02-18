@@ -21,7 +21,21 @@ obj/x64/Debug/moona/main.o: ../../src/main.cpp /usr/include/stdc-predef.h \
  ../external/raylib-master/src/raylib.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/stdarg.h \
  ../../src/spritesheet.hpp ../../src/handler.hpp ../../src/enemy.hpp \
- ../../src/tilemap.hpp /usr/include/c++/14.2.1/string \
+ ../../src/player.hpp /usr/include/sys/types.h \
+ /usr/include/bits/types/clock_t.h /usr/include/bits/types/clockid_t.h \
+ /usr/include/bits/types/time_t.h /usr/include/bits/types/timer_t.h \
+ /usr/include/endian.h /usr/include/bits/endian.h \
+ /usr/include/bits/endianness.h /usr/include/bits/byteswap.h \
+ /usr/include/bits/uintn-identity.h /usr/include/sys/select.h \
+ /usr/include/bits/select.h /usr/include/bits/types/sigset_t.h \
+ /usr/include/bits/types/__sigset_t.h \
+ /usr/include/bits/types/struct_timeval.h \
+ /usr/include/bits/types/struct_timespec.h \
+ /usr/include/bits/pthreadtypes.h /usr/include/bits/thread-shared-types.h \
+ /usr/include/bits/pthreadtypes-arch.h \
+ /usr/include/bits/atomic_wide_counter.h /usr/include/bits/struct_mutex.h \
+ /usr/include/bits/struct_rwlock.h ../../src/tilemap.hpp \
+ /usr/include/c++/14.2.1/string \
  /usr/include/c++/14.2.1/bits/requires_hosted.h \
  /usr/include/c++/14.2.1/bits/stringfwd.h \
  /usr/include/c++/14.2.1/bits/memoryfwd.h \
@@ -45,7 +59,6 @@ obj/x64/Debug/moona/main.o: ../../src/main.cpp /usr/include/stdc-predef.h \
  /usr/include/c++/14.2.1/clocale /usr/include/locale.h \
  /usr/include/bits/locale.h /usr/include/c++/14.2.1/iosfwd \
  /usr/include/c++/14.2.1/cctype /usr/include/ctype.h \
- /usr/include/bits/endian.h /usr/include/bits/endianness.h \
  /usr/include/c++/14.2.1/bits/ostream_insert.h \
  /usr/include/c++/14.2.1/bits/cxxabi_forced.h \
  /usr/include/c++/14.2.1/bits/stl_iterator_base_funcs.h \
@@ -79,21 +92,10 @@ obj/x64/Debug/moona/main.o: ../../src/main.cpp /usr/include/stdc-predef.h \
  /usr/include/c++/14.2.1/ext/string_conversions.h \
  /usr/include/c++/14.2.1/cstdlib /usr/include/stdlib.h \
  /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
- /usr/include/sys/types.h /usr/include/bits/types/clock_t.h \
- /usr/include/bits/types/clockid_t.h /usr/include/bits/types/time_t.h \
- /usr/include/bits/types/timer_t.h /usr/include/endian.h \
- /usr/include/bits/byteswap.h /usr/include/bits/uintn-identity.h \
- /usr/include/sys/select.h /usr/include/bits/select.h \
- /usr/include/bits/types/sigset_t.h /usr/include/bits/types/__sigset_t.h \
- /usr/include/bits/types/struct_timeval.h \
- /usr/include/bits/types/struct_timespec.h \
- /usr/include/bits/pthreadtypes.h /usr/include/bits/thread-shared-types.h \
- /usr/include/bits/pthreadtypes-arch.h \
- /usr/include/bits/atomic_wide_counter.h /usr/include/bits/struct_mutex.h \
- /usr/include/bits/struct_rwlock.h /usr/include/alloca.h \
- /usr/include/bits/stdlib-float.h /usr/include/c++/14.2.1/bits/std_abs.h \
- /usr/include/c++/14.2.1/cstdio /usr/include/stdio.h \
- /usr/include/bits/types/__fpos_t.h /usr/include/bits/types/__fpos64_t.h \
+ /usr/include/alloca.h /usr/include/bits/stdlib-float.h \
+ /usr/include/c++/14.2.1/bits/std_abs.h /usr/include/c++/14.2.1/cstdio \
+ /usr/include/stdio.h /usr/include/bits/types/__fpos_t.h \
+ /usr/include/bits/types/__fpos64_t.h \
  /usr/include/bits/types/struct_FILE.h \
  /usr/include/bits/types/cookie_io_functions_t.h \
  /usr/include/bits/stdio_lim.h /usr/include/c++/14.2.1/cerrno \
@@ -107,7 +109,7 @@ obj/x64/Debug/moona/main.o: ../../src/main.cpp /usr/include/stdc-predef.h \
  /usr/include/c++/14.2.1/cstddef \
  /usr/include/c++/14.2.1/bits/uses_allocator.h \
  /usr/include/c++/14.2.1/bits/uses_allocator_args.h \
- /usr/include/c++/14.2.1/tuple ../../src/player.hpp ../../src/pickup.hpp \
+ /usr/include/c++/14.2.1/tuple ../../src/pickup.hpp \
  ../../src/include/resource_dir.h
 /usr/include/stdc-predef.h:
 /usr/include/c++/14.2.1/cstdint:
@@ -146,6 +148,29 @@ obj/x64/Debug/moona/main.o: ../../src/main.cpp /usr/include/stdc-predef.h \
 ../../src/spritesheet.hpp:
 ../../src/handler.hpp:
 ../../src/enemy.hpp:
+../../src/player.hpp:
+/usr/include/sys/types.h:
+/usr/include/bits/types/clock_t.h:
+/usr/include/bits/types/clockid_t.h:
+/usr/include/bits/types/time_t.h:
+/usr/include/bits/types/timer_t.h:
+/usr/include/endian.h:
+/usr/include/bits/endian.h:
+/usr/include/bits/endianness.h:
+/usr/include/bits/byteswap.h:
+/usr/include/bits/uintn-identity.h:
+/usr/include/sys/select.h:
+/usr/include/bits/select.h:
+/usr/include/bits/types/sigset_t.h:
+/usr/include/bits/types/__sigset_t.h:
+/usr/include/bits/types/struct_timeval.h:
+/usr/include/bits/types/struct_timespec.h:
+/usr/include/bits/pthreadtypes.h:
+/usr/include/bits/thread-shared-types.h:
+/usr/include/bits/pthreadtypes-arch.h:
+/usr/include/bits/atomic_wide_counter.h:
+/usr/include/bits/struct_mutex.h:
+/usr/include/bits/struct_rwlock.h:
 ../../src/tilemap.hpp:
 /usr/include/c++/14.2.1/string:
 /usr/include/c++/14.2.1/bits/requires_hosted.h:
@@ -180,8 +205,6 @@ obj/x64/Debug/moona/main.o: ../../src/main.cpp /usr/include/stdc-predef.h \
 /usr/include/c++/14.2.1/iosfwd:
 /usr/include/c++/14.2.1/cctype:
 /usr/include/ctype.h:
-/usr/include/bits/endian.h:
-/usr/include/bits/endianness.h:
 /usr/include/c++/14.2.1/bits/ostream_insert.h:
 /usr/include/c++/14.2.1/bits/cxxabi_forced.h:
 /usr/include/c++/14.2.1/bits/stl_iterator_base_funcs.h:
@@ -218,26 +241,6 @@ obj/x64/Debug/moona/main.o: ../../src/main.cpp /usr/include/stdc-predef.h \
 /usr/include/stdlib.h:
 /usr/include/bits/waitflags.h:
 /usr/include/bits/waitstatus.h:
-/usr/include/sys/types.h:
-/usr/include/bits/types/clock_t.h:
-/usr/include/bits/types/clockid_t.h:
-/usr/include/bits/types/time_t.h:
-/usr/include/bits/types/timer_t.h:
-/usr/include/endian.h:
-/usr/include/bits/byteswap.h:
-/usr/include/bits/uintn-identity.h:
-/usr/include/sys/select.h:
-/usr/include/bits/select.h:
-/usr/include/bits/types/sigset_t.h:
-/usr/include/bits/types/__sigset_t.h:
-/usr/include/bits/types/struct_timeval.h:
-/usr/include/bits/types/struct_timespec.h:
-/usr/include/bits/pthreadtypes.h:
-/usr/include/bits/thread-shared-types.h:
-/usr/include/bits/pthreadtypes-arch.h:
-/usr/include/bits/atomic_wide_counter.h:
-/usr/include/bits/struct_mutex.h:
-/usr/include/bits/struct_rwlock.h:
 /usr/include/alloca.h:
 /usr/include/bits/stdlib-float.h:
 /usr/include/c++/14.2.1/bits/std_abs.h:
@@ -263,6 +266,5 @@ obj/x64/Debug/moona/main.o: ../../src/main.cpp /usr/include/stdc-predef.h \
 /usr/include/c++/14.2.1/bits/uses_allocator.h:
 /usr/include/c++/14.2.1/bits/uses_allocator_args.h:
 /usr/include/c++/14.2.1/tuple:
-../../src/player.hpp:
 ../../src/pickup.hpp:
 ../../src/include/resource_dir.h:

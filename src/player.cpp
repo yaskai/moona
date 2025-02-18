@@ -88,8 +88,8 @@ void Player::Update(float delta) {
 	}
 
 	if(player_state == PLAYER_BOOST) {
-		gravity = 0.0f;
-		vel_max = {4, 4};
+		gravity = 0.075f;
+		vel_max = {5, 5};
 		vel_min = Vector2Scale(vel_max, -1);
 
 		//velocity = Vector2Add(velocity, Vector2Scale(boost_dir, 0.75f));
@@ -341,8 +341,13 @@ void Player::InputKB(float delta) {
 				} else {
 					//boost_dir = Vector2Zero();
 					//boost_rotation = 0.0f;
-					boost_dest_v = {0, -1};
-					boost_pres_v = {0, -1};
+					//boost_dest_v = {0, -1};
+					//boost_pres_v = {0, -1};
+					if(IsKeyDown(KEY_A)) boost_pres_v.x = -1;
+					if(IsKeyDown(KEY_D)) boost_pres_v.x = 1;
+					if(IsKeyDown(KEY_W)) boost_pres_v.y = -1;
+					if(IsKeyDown(KEY_S)) boost_pres_v.y = 1;
+
 					player_state = PLAYER_BOOST;
 					boost_used = true;
 				}
@@ -399,16 +404,13 @@ void Player::InputKB(float delta) {
 		if(IsKeyUp(KEY_A) && IsKeyUp(KEY_D) && IsKeyUp(KEY_W) && IsKeyUp(KEY_S)) {
 			boost_dest_v = boost_pres_v;
 		}
-
+		/*
 		if(boost_dir.x < -1) boost_dir.x = -1;
 		else if(boost_dir.x > 1) boost_dir.x = 1;
 		if(boost_dir.y < -1) boost_dir.y = -1;
 		else if(boost_dir.y > 1) boost_dir.y = 1;
-		/*	
-		boost_pres_v.x += (boost_pres_v.x - boost_dest_v.x) * (delta * 0.25f);
-		boost_pres_v.y += (boost_pres_v.y - boost_dest_v.y) * (delta * 0.25f);
 		*/
-		boost_pres_v = Vector2Lerp(boost_pres_v, boost_dest_v, delta * 0.05f);
+		boost_pres_v = Vector2Lerp(boost_pres_v, boost_dest_v, delta * 0.015f);
 	}
 
 	// *KEYBOARD*

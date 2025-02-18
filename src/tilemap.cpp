@@ -120,6 +120,7 @@ void TilemapGenerate(Tilemap *tilemap) {
 
 		if(tilemap->map_data[i] == TILE_PICKUP) NewPickup(tmHandler, CoordsToVector(tilemap, {c, r}));
 		if(tilemap->map_data[i] == TILE_ENEMY0) NewEnemy(tmHandler, CoordsToVector(tilemap, {c, r}), 0);
+		if(tilemap->map_data[i] == TILE_ENEMY1) NewEnemy(tmHandler, CoordsToVector(tilemap, {c, r}), 1);
 	}
 }
 
