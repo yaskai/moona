@@ -45,3 +45,23 @@ void DrawSprite(Spritesheet *spritesheet, Vector2 position, uint8_t index, uint8
 	DrawTextureRec(spritesheet->texture, rec, position, WHITE);
 }
 
+Spritesheet MakeDamageSheet(Spritesheet *source, Image img, Color color) {
+	Spritesheet new_ss;
+
+	new_ss.texture = LoadTextureFromImage(img);
+	new_ss.frame_w = source->frame_w;
+	new_ss.frame_h = source->frame_h;
+	new_ss.frame_count = source->frame_count;
+	new_ss.frame_rec = source->frame_rec;
+
+	Color *px = LoadImageColors(img);
+
+	for(int i = 0; i < (source->texture.width * source->texture.height); i++) 
+		if(px[i].a > 0) px[i] = color;			
+
+	UpdateTexture(new_ss.texture, px);
+	free(px);
+
+	return new_ss;
+}
+

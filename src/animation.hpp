@@ -14,6 +14,9 @@ typedef struct {
 	bool is_done;
 	float last_frame_time;
 	float init_time;
+	float interval;
+	float acc;
+	float time_mod;
 	Spritesheet *ss;
 	Rectangle *frames;
 } Animation;

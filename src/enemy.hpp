@@ -13,6 +13,7 @@ typedef struct {
 	uint8_t HP;
 	bool active;
 	bool dead;
+	bool DAMAGE;
 	float damage_timer;
 	Vector2 position;
 	Vector2 start_position;
@@ -21,6 +22,8 @@ typedef struct {
 	Animation anim;
 	Animation death_anim;
 	Spritesheet *ss;
+	Spritesheet *damage_ss;
+	Spritesheet *ssPtr;
 } Enemy;
 
 Enemy MakeEnemy(Vector2 position, uint8_t type);
@@ -29,6 +32,7 @@ void EnemyUpdate(Enemy *enemy, float dt);
 void EnemyDraw(Enemy *enemy);
 void EnemyCollision(Enemy *enemy, Player *player);
 void EnemyDamage(Enemy *enemy);
+void EnemyUpdateSpritesheet(Enemy *enemy);
 
 void AlienUpdate(Enemy *enemy);
 void AlienDraw(Enemy *enemy);

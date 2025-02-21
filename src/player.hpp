@@ -3,7 +3,6 @@
 #include <cstdint>
 #include "animation.hpp"
 #include "raylib.h"
-#include "raymath.h"
 #include "spritesheet.hpp"
 #include "tilemap.hpp" 
 
@@ -34,13 +33,19 @@ public:
 	u_int8_t HP;
 	enum PLAYER_STATE player_state;
 	bool on_ground;
+	bool boost_used;
 	float time_mod;
+	float last_ground_y;
 	float milk_rotation;
+	float damage_timer;
+	float boost_amount;
+	float boost_init_amount;
 	Vector2 milk_facing;
 	Vector2 milk_start;
 	Vector2 milk_end;
 	Vector2 position, velocity;
 	Vector2 start_pos;
+	Vector2 prev_pos;
 	Coords grid_pos;
 	Rectangle bounds;
 	Camera2D *_cam;
@@ -56,6 +61,8 @@ public:
 	void MoveY(float amount);
 	void UpdateCam(uint8_t ww, uint8_t wh);
 	void Die();
+	void TakeDamage();
+	void DrawHealthBar();
 private:
 	void Collision();
 	void TakeInput(float delta);	 

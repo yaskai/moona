@@ -1,6 +1,6 @@
 #include <cstdint>
+#include <cstdlib>
 #include <cstring>
-#include "animation.hpp"
 #include "handler.hpp"
 #include "raylib.h"
 #include "include/resource_dir.h"
@@ -18,6 +18,7 @@ void TilemapSetHandler(Handler *handler);
 void PlayerSetHandler(Handler *handler);
 
 int main () {
+	//SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI | FLAG_FULLSCREEN_MODE);
 	SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
 	
 	int ww = 1920;
@@ -34,7 +35,7 @@ int main () {
 		fps = GetMonitorRefreshRate(0);
 	}
 
-	InitWindow(ww, wh, "Raylib Project");
+	InitWindow(ww, wh, "Milk Time");
 	SetTargetFPS(fps);
 	HideCursor();
 
@@ -71,7 +72,7 @@ int main () {
 	while (!WindowShouldClose()) {
 		// Update logic
 		float delta = GetFrameTime() * 100;
-		float delta1 = (GetFrameTime() * 100) * player.time_mod;
+		float delta1 = delta * player.time_mod;
 		
 		player.Update(delta);
 		HandlerUpdate(&handler, delta1);
@@ -86,6 +87,8 @@ int main () {
 				HandlerDraw(&handler);
 				player.Draw();
 			EndMode2D();
+
+			player.DrawHealthBar();
 
 		EndDrawing();
 	}

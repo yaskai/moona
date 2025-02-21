@@ -26,10 +26,6 @@ bool DECEL = false;
 float jump_release = false;
 float jump_release_timer = 0;
 
-float last_ground_y;
-
-bool boost_used = false;
-float boost_amount = 0;
 float boost_max = 240;
 Vector2 boost_dir = {0, 0};
 
@@ -45,6 +41,19 @@ Vector2 vel_max = {5, 8};
 char dir = 'r';
 uint8_t draw_flags = 0;
 
+float zoom_target = 1.0f;
+
+Spritesheet damage_ss;
+
+Spritesheet hp_gain_ss;
+Animation hp_gain_anim;
+
+//Spritesheet hp_lose_ss;
+//Animation hp_lose_anim;
+
+int MILK_KEY = KEY_J;
+//int MILK_KEY = KEY_ENTER;
+
 void Player::Init(Tilemap *tilemap, Spritesheet *ss, Camera2D *cam) {
 	_tilemap = tilemap;
 	_ss = ss;
@@ -59,16 +68,26 @@ void Player::Init(Tilemap *tilemap, Spritesheet *ss, Camera2D *cam) {
 	last_ground_y = position.y;
 
 	HP = 3;
+	damage_timer = 0.0f;
+
 	player_state = PLAYER_IDLE;
 
-	run_anim = MakeAnimation(12, 1, true, 24, _ss);
-	jump_anim = MakeAnimation(15, 8, true, 24, _ss);
+	run_anim = MakeAnimation(12, 1, true, 20, _ss);
+	jump_anim = MakeAnimation(15, 8, true, 20, _ss);
+
+	damage_ss = MakeDamageSheet(ss, LoadImage("moona_sheet_00.png"), RED);
+
+	boost_amount = 0;
+	boost_init_amount = 0;
+
+	hp_gain_ss = MakeSpritesheet(96, 96, LoadTexture("hp_gain.png"));
+	hp_gain_anim = MakeAnimation(19, 0, true, 20, &hp_gain_ss);
 }
 
 void Player::Update(float delta) {
 	bounds = (Rectangle){position.x, position.y, 64, 64};
-	
 	grid_pos = VectorToCoords(_tilemap, (Vector2){position.x, position.y});
+	prev_pos = position;
 
 	if(velocity.x < vel_min.x) velocity.x = vel_min.x;
 	else if(velocity.x > vel_max.x) velocity.x = vel_max.x;
@@ -91,35 +110,33 @@ void Player::Update(float delta) {
 		vel_max = {6.5f, 6.5f};
 		vel_min = Vector2Scale(vel_max, -1);
 
-		//velocity = Vector2Add(velocity, Vector2Scale(boost_dir, 0.75f));
+		if(boost_amount >= boost_init_amount - 1) boost_facing = boost_dest_v;
+
 		velocity = Vector2Add(velocity, Vector2Scale(boost_facing, 0.25f));
 		
 		milk_rotation = boost_rotation;
 		milk_facing = boost_facing;
-		
-		
 
 		milk_start = {position.x + 32, position.y + 20};
-		milk_end = Vector2Add(milk_start, Vector2Scale(boost_facing, -5000));
-		/*
-		for(uint16_t r = _tilemap->frame_min.r; r < _tilemap->frame_max.r; r++) {
-			for(uint16_t c = _tilemap->frame_min.c; c < _tilemap->frame_max.c; c++) {
-				if(FetchTile(_tilemap, {c, r}) == '1') {
-					Vector2 tile_center = Vector2Add(CoordsToVector(_tilemap, {c, r}), {32, 32});
-					if(CheckCollisionCircleLine(tile_center, 80, milk_start,  milk_end)) {
-						milk_end = Vector2Add(milk_start, Vector2Scale(boost_facing, 
-													 Vector2Distance(milk_start, {tile_center.x - 32, tile_center.y - 32}) * -1));	
-					}
+		milk_end = Vector2Add(milk_start, Vector2Scale(boost_facing, -2000));
+		if(boost_amount >= boost_init_amount - 1) milk_end = milk_start;
+		
+		if(boost_amount <= boost_init_amount - 1) {
+			for(uint16_t i = 0; i < Vector2Distance(milk_start,  milk_end); i += 4) {
+				Vector2 point = Vector2Add(milk_start, Vector2Scale(boost_facing, -i));
+				if(HasCollider(_tilemap, point)) {
+					milk_end = point;
+					break;
 				}
 			}
 		}
-		*/
-		
+
 		decel_timer = 20;
 		DECEL = false;
 		
 		if(boost_amount <= 0 || on_ground) {
 			StartFall();
+			boost_init_amount = 0;
 		}
 
 		boost_amount -= delta;
@@ -139,6 +156,19 @@ void Player::Draw() {
 	Vector2 draw_pos = {position.x, position.y - 20};
 	if(dir == 'l') draw_flags = (FLIP_X);
 	else if(dir == 'r') draw_flags = 0;
+	
+	Vector2 center = Vector2Add(position, {32, 32});
+	float boost_circ_r = ((boost_amount / boost_max) * 100) + 28;
+	//boost_facing = Vector2Rotate(boost_pres_v, boost_rotation * DEG2RAD);
+	
+	Vector2 dir_circle = Vector2Scale(boost_dest_v, boost_circ_r);
+	//Vector2 dir_circle = Vector2Rotate(boost_dest_v, boost_rotation * DEG2RAD);
+
+	Spritesheet *ssPtr = _ss;
+	if(damage_timer > 0) ssPtr = &damage_ss;
+
+	run_anim.ss = ssPtr;
+	jump_anim.ss = ssPtr;
 
 	switch(player_state) {
 		case PLAYER_IDLE:
@@ -156,7 +186,7 @@ void Player::Draw() {
 			break;
 
 		case PLAYER_FALL:
-			DrawSprite(_ss, draw_pos, 17, draw_flags);
+			DrawSprite(ssPtr, draw_pos, 17, draw_flags);
 			break;
 
 		case PLAYER_LAND:
@@ -169,35 +199,35 @@ void Player::Draw() {
 			if(boost_facing.x > 0) draw_flags |= FLIP_X;
 			if(boost_facing.y > 0) draw_flags |= FLIP_Y;
 
-			DrawLineEx(milk_start, milk_end, 20, RAYWHITE);
+			if(boost_amount <= boost_init_amount - 1) DrawLineEx(milk_start, milk_end, 20, RAYWHITE);
 
-			DrawSprite(_ss, draw_pos, 15, draw_flags);
-			DrawCircleLinesV(milk_start, 128, WHITE);
+			DrawSprite(ssPtr, draw_pos, 15, draw_flags);
+			//DrawCircleLinesV(milk_start, 128, WHITE);
 
-			float sc;
-			if(boost_dest_v.y == 0 || boost_dest_v.y == 0) sc = 128;
-			else sc = 90;
-			if(boost_dest_v.y == 1 && boost_dest_v.x == 0) sc = 138;
-			if(boost_dest_v.y == -1 && boost_dest_v.x == 0) sc = 138;
-			DrawCircleV(Vector2Add(milk_start, Vector2Scale(boost_dest_v, sc)), 16, WHITE);
+			DrawCircleLinesV(center, boost_circ_r, WHITE);
+			DrawCircleV(Vector2Add(center, dir_circle), 16, WHITE);
+
+			//DrawText(TextFormat("%f, %f", boost_dest_v.x, boost_dest_v.y), position.x, position.y, 30, GREEN);
 			break;
 
 		case PLAYER_CHARGE:
-			DrawSprite(_ss, draw_pos, 25, draw_flags);
-			DrawCircleLinesV(Vector2Add(position, {32, 32}), 128, WHITE);
+			DrawSprite(ssPtr, draw_pos, 25, draw_flags);
+			//DrawCircleLinesV(Vector2Add(position, {32, 32}), 128, WHITE);
+		
+			DrawCircleLinesV(center, boost_circ_r, WHITE);
+			
+			//DrawCircleV(Vector2Add(center, Vector2Scale(boost_dest_v, boost_circ_r)), 16, WHITE);
+			DrawCircleV(Vector2Add(center, dir_circle), 16, WHITE);
 
-			float scb;
-			if(boost_dest_v.y == 0 || boost_dest_v.y == 0) scb = 128;
-			else scb = 90;
-			if(boost_dest_v.y == 1 && boost_dest_v.x == 0) scb = 138;
-			if(boost_dest_v.y == -1 && boost_dest_v.x == 0) scb = 138;
-			DrawCircleV(Vector2Add(Vector2Add(position, {32, 32}), Vector2Scale(boost_dest_v, scb)), 16, WHITE);
+			//DrawText(TextFormat("%f, %f", boost_dest_v.x, boost_dest_v.y), position.x, position.y, 30, GREEN);
 			break;
 	}
 }
 
 void Player::Close() {
 	CloseAnimation(&run_anim);
+	SpritesheetClose(&hp_gain_ss);
+	CloseAnimation(&hp_gain_anim);
 }
 
 void Player::MoveX(float amount) {
@@ -326,15 +356,15 @@ void Player::InputKB(float delta) {
 
 		// BOOST
 		if(!on_ground && !boost_used) {
-			if(IsKeyDown(KEY_ENTER)) {
+			if(IsKeyDown(MILK_KEY)) {
 				boost_amount += 2 * delta;
-				if(velocity.y > 0.5f) velocity.y = 0.5f;
+				if(velocity.y > 0.25f) velocity.y = 0.25f;
 				if(velocity.x > 1) velocity.x = 1;
 				else if(velocity.x < -1) velocity.x = -1;
 				player_state = PLAYER_CHARGE;
 			}
 
-			if(IsKeyReleased(KEY_ENTER) || boost_amount >= boost_max) {
+			if(IsKeyReleased(MILK_KEY) || boost_amount >= boost_max) {
 				if(boost_amount <= 1) { 
 					boost_amount = 0;
 					boost_used = false;
@@ -343,6 +373,7 @@ void Player::InputKB(float delta) {
 					//boost_rotation = 0.0f;
 					//boost_dest_v = {0, -1};
 					//boost_pres_v = {0, -1};
+					
 					if(IsKeyDown(KEY_A)) boost_pres_v.x = -1;
 					if(IsKeyDown(KEY_D)) boost_pres_v.x = 1;
 					if(IsKeyDown(KEY_W)) boost_pres_v.y = -1;
@@ -353,6 +384,7 @@ void Player::InputKB(float delta) {
 
 					player_state = PLAYER_BOOST;
 					boost_used = true;
+					boost_init_amount = boost_amount;
 				}
 			}
 		}
@@ -374,17 +406,28 @@ void Player::InputKB(float delta) {
 	} else jump_release = true;
 	
 	if(player_state == PLAYER_CHARGE) {
-		if(IsKeyDown(KEY_A)) {
-			boost_dest_v.x = -1;
-		} else if(IsKeyDown(KEY_D)) {
-			boost_dest_v.x = 1;
-		} else boost_dest_v.x = 0;
+		boost_facing = Vector2Rotate(boost_pres_v, boost_rotation * DEG2RAD);
 
-		if(IsKeyDown(KEY_W)) {
-			boost_dest_v.y = -1;
-		} else if (IsKeyDown(KEY_S)) {
-			boost_dest_v.y = 1;
-		} else boost_dest_v.y = 0;
+		if(IsKeyDown(KEY_A)) boost_dest_v.x = -1;
+		else if(IsKeyDown(KEY_D)) boost_dest_v.x = 1;
+		else boost_dest_v.x = 0;
+
+		if(IsKeyDown(KEY_W)) boost_dest_v.y = -1;
+		else if (IsKeyDown(KEY_S)) boost_dest_v.y = 1;
+		else boost_dest_v.y = 0;
+
+		if(boost_dest_v.x < -1) boost_dest_v.x = -1;
+		else if(boost_dest_v.x > 1) boost_dest_v.x = 1;
+
+		if(boost_dest_v.y < -1) boost_dest_v.y = -1;
+		else if(boost_dest_v.y > 1) boost_dest_v.y = 1;
+
+		if(IsKeyUp(KEY_A) && IsKeyUp(KEY_D) && IsKeyUp(KEY_W) && IsKeyUp(KEY_S)) {
+			boost_dest_v = (Vector2){0, 0};
+		}
+
+		milk_start = Vector2Add(position, (Vector2){32, 32});
+		//milk_end = Vector2Add(position, (Vector2){32, 32});
 	}
 
 	if(player_state == PLAYER_BOOST) {
@@ -412,7 +455,7 @@ void Player::InputKB(float delta) {
 		if(boost_dir.y < -1) boost_dir.y = -1;
 		else if(boost_dir.y > 1) boost_dir.y = 1;
 		*/
-
+		
 		boost_pres_v = Vector2Lerp(boost_pres_v, boost_dest_v, delta * 0.085f);
 	}
 
@@ -447,6 +490,8 @@ void Player::ManageTimers(float delta) {
 	else ground_timer = 5;
 
 	if(jump_release) jump_release_timer -= delta;
+	
+	damage_timer -= delta;
 }
 
 void Player::UpdateCam(uint8_t ww, uint8_t wh) {
@@ -459,20 +504,47 @@ void Player::UpdateCam(uint8_t ww, uint8_t wh) {
 	if(_cam->target.x < _cam->offset.x) 
 		_cam->target.x = _cam->offset.x;
 	
-	if(_cam->target.x > (_tilemap->width * TILE_SIZE) - _cam->offset.x) 
-		_cam->target.x = (_tilemap->width * TILE_SIZE) - _cam->offset.x;
+	if(_cam->target.x > (_tilemap->width * (TILE_SIZE * _cam->zoom)) - _cam->offset.x) 
+		_cam->target.x = (_tilemap->width * (TILE_SIZE * _cam->zoom)) - _cam->offset.x;
 	
 	if(_cam->target.y < _cam->offset.y) 
 		_cam->target.y = _cam->offset.y;
 
-	if(_cam->target.y > ((_tilemap->height + 1) * TILE_SIZE) - _cam->offset.y) 
-		_cam->target.y = ((_tilemap->height + 1) * TILE_SIZE) - _cam->offset.y;
+	if(_cam->target.y > ((_tilemap->height) * (TILE_SIZE * _cam->zoom)) - _cam->offset.y) 
+		_cam->target.y = ((_tilemap->height) * (TILE_SIZE * _cam->zoom)) - _cam->offset.y;
+
+	/*
+	if(player_state == PLAYER_CHARGE) {
+		zoom_target = 0.95f;
+	} else zoom_target = 1.0f;
+
+	_cam->zoom = Lerp(_cam->zoom, zoom_target, GetFrameTime() * 10);
+	*/
 }
 
 void Player::Die() {
 	position = start_pos;
 	velocity = Vector2Zero();
 	player_state = PLAYER_IDLE;
+	boost_used = false;
 	ResetLevel(plHandler);
+	HP = 3;
+}
+
+void Player::TakeDamage() {
+	if(damage_timer <= 0) {
+		HP--;
+		damage_timer = 20;
+		if(HP <= 0) Die(); 	
+	}
+}	
+
+void Player::DrawHealthBar() {
+	PlayAnimation(&hp_gain_anim);
+	
+	for(uint8_t i = 0; i < HP; i++) {
+		//DrawAnimation(&hp_gain_anim, {i * 100.0f, 40.0f}, 0);
+		DrawSprite(&hp_gain_ss, {i * 100.0f, 40.0f}, 0, 0);	
+	}
 }
 

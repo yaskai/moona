@@ -40,24 +40,33 @@ void EnemyCollision(Enemy *enemy, Player *player) {
 		//enemy->active = false;
 		enemy->dead = true;	
 		player->velocity.y = -10;
+		player->boost_used = false;
+		player->last_ground_y = enemy->position.y;
 	} 
 	
-	if(CheckCollisionRecs(enemy->bounds, player->bounds) && player->velocity.y <= 0) {
-		// PLAYER DAMAGE...
-	}
+	if(CheckCollisionRecs(enemy->bounds, player->bounds) && player->velocity.y <= 0)
+		player->TakeDamage();
 }
 
 void EnemyDamage(Enemy *enemy) {
 	if(enemy->damage_timer <= 0) {
-		enemy->damage_timer = 2;
+		enemy->damage_timer = 10;
 		enemy->HP--;
+		enemy->DAMAGE = true;
 		if(enemy->HP <= 0) enemy->dead = true;
+		EnemyUpdateSpritesheet(enemy);
 	}
+}
+
+void EnemyUpdateSpritesheet(Enemy *enemy) {
+	if(enemy->DAMAGE) enemy->ssPtr = enemy->damage_ss;	
+	else enemy->ssPtr = enemy->ss;
+	enemy->anim.ss = enemy->ssPtr;
 }
 
 void AlienUpdate(Enemy *enemy) {
 	enemy->bounds = (Rectangle) {
-		enemy->position.x + 20,
+		enemy->position.x + 30,
 		enemy->position.y + 20,
 		20.0f, 64.0f 
 	};
@@ -73,7 +82,6 @@ void AlienUpdate(Enemy *enemy) {
 		PlayAnimation(&enemy->death_anim);
 		if(enemy->death_anim.is_done) enemy->active = false;
 	}	
-
 }
 
 void AlienDraw(Enemy *enemy) {
@@ -108,5 +116,4 @@ void UfoDraw(Enemy *enemy) {
 	if(!enemy->dead) DrawAnimation(&enemy->anim, enemy->position, 0);
 	else DrawAnimation(&enemy->death_anim, enemy->position, 0);
 }
-
 
