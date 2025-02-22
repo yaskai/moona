@@ -6,6 +6,7 @@
 #include "tilemap.hpp"
 #include "player.hpp"
 #include "pickup.hpp"
+#include "audioPlayer.hpp"
 
 typedef struct {
 	Tilemap *tilemap;
@@ -13,6 +14,7 @@ typedef struct {
 	Camera2D *cam;
 	Pickup *pickups;
 	Enemy *enemies;
+	AudioPlayer *ap;
 } Handler;
 
 void HandlerInit(Handler *handler, Tilemap *tilemap, Camera2D *cam, Player *player);

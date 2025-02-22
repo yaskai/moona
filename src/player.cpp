@@ -54,6 +54,8 @@ Animation hp_gain_anim;
 int MILK_KEY = KEY_J;
 //int MILK_KEY = KEY_ENTER;
 
+//Sound LoadSound(*'CyberZeus_Fin (Game Music).mp3');
+
 void Player::Init(Tilemap *tilemap, Spritesheet *ss, Camera2D *cam) {
 	_tilemap = tilemap;
 	_ss = ss;
@@ -109,6 +111,11 @@ void Player::Update(float delta) {
 		gravity = 0.075f;
 		vel_max = {6.5f, 6.5f};
 		vel_min = Vector2Scale(vel_max, -1);
+		
+		if (!IsMusicStreamPlaying(plHandler->ap->music[1])) {
+			PlayMusicStream(plHandler->ap->music[1]);
+		}
+		UpdateMusicStream(plHandler->ap->music[1]);
 
 		if(boost_amount >= boost_init_amount - 1) boost_facing = boost_dest_v;
 

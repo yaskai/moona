@@ -8,11 +8,12 @@
 #include "tilemap.hpp"
 #include "player.hpp"
 #include "handler.hpp"
+#include "audioPlayer.hpp"
 
 #define WINDOW_A 0x01	
 #define WINDOW_B 0x02
 
-uint8_t WINDOW_FLAGS = (WINDOW_A);
+uint8_t WINDOW_FLAGS = (0);
 
 void TilemapSetHandler(Handler *handler);
 void PlayerSetHandler(Handler *handler);
@@ -41,6 +42,9 @@ int main () {
 
 	SearchAndSetResourceDir("resources");
 
+	AudioPlayer ap;
+	AudioPlayerInit(&ap);
+
 	if(IsGamepadAvailable(0)) puts("Gamepad connected!");
 	else puts("Gamepad not connected...");
 
@@ -64,16 +68,21 @@ int main () {
 	Handler handler;
 	HandlerInit(&handler, &tilemap, &cam, &player);
 
+	handler.ap  = &ap;
+
 	TilemapSetHandler(&handler);
 	TilemapGenerate(&tilemap);
 
 	PlayerSetHandler(&handler);
-	
+	// Music *music = ap->music;
+	// PlayMusicStream(ap.music);
 	while (!WindowShouldClose()) {
 		// Update logic
 		float delta = GetFrameTime() * 100;
 		float delta1 = delta * player.time_mod;
-		
+
+		UpdateMusicStream(ap.music[0]);		
+
 		player.Update(delta);
 		HandlerUpdate(&handler, delta1);
 		player.UpdateCam(ww, wh);
@@ -92,11 +101,12 @@ int main () {
 
 		EndDrawing();
 	}
-	
+
 	TilemapClose(&tilemap);
 	SpritesheetClose(&tile_ss);
 	SpritesheetClose(&player_ss);
 	player.Close();
+	AudioPlayerClose(&ap);
 
 	CloseWindow();
 	return 0;

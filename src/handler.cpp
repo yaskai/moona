@@ -7,6 +7,7 @@
 #include "pickup.hpp"
 #include "player.hpp"
 #include "spritesheet.hpp"
+#include "audioPlayer.hpp"
 
 Spritesheet pickup_ss;
 Animation pickup_anim;
@@ -64,6 +65,7 @@ void HandlerUpdate(Handler *handler, float dt) {
 
 			if(CheckCollisionRecs(handler->player->bounds, handler->pickups[i].bounds)) {
 				// PICKUP FLOWER...
+				PlaySoundEffect(handler->ap, SOUND_PICKUP);
 				handler->pickups[i].active = false;	
 				handler->player->HP++;
 			}
