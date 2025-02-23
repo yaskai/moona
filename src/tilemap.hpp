@@ -36,14 +36,14 @@ typedef struct {
 } Coords;
 
 typedef struct {
-	u_int8_t flags;
+	uint8_t flags;
 	uint16_t width, height;
 	uint16_t tile_count;
 	Coords frame_min;  // Top left visible tile
 	Coords frame_max;  // Bottom right visible tile
 	Camera2D *cam;
 	char *map_data;  // Char array set by level file
-	u_int8_t *spr_idx; // Sprite index array, 
+	uint8_t *spr_idx; // Sprite index array, 
 	Rectangle *solids;
 	Spritesheet *ss;
 } Tilemap;

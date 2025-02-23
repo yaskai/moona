@@ -12,7 +12,7 @@ const float leftStickDeadzoneY = 0.1f;
 const float rightStickDeadzoneX = 0.1f;
 const float rightStickDeadzoneY = 0.1f;
 
-enum PLAYER_STATE : u_int8_t {
+enum PLAYER_STATE : uint8_t {
 	PLAYER_IDLE,
 	PLAYER_RUN,
 	PLAYER_JUMP,
@@ -30,7 +30,7 @@ enum PLAYER_STATE : u_int8_t {
 
 class Player {
 public:
-	u_int8_t HP;
+	uint8_t HP;
 	enum PLAYER_STATE player_state;
 	bool on_ground;
 	bool boost_used;

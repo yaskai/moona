@@ -1,7 +1,6 @@
 #pragma once
 
 #include <cstdint>
-#include <sys/types.h>
 #include "animation.hpp"
 #include "raylib.h"
 #include "spritesheet.hpp"
