@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <cstdio>
 #include "animation.hpp"
+#include "audioPlayer.hpp"
 #include "raylib.h"
 #include "raymath.h"
 #include "spritesheet.hpp"
@@ -96,7 +97,7 @@ void Player::Update(float delta) {
 	if(velocity.y < vel_min.y) velocity.y = vel_min.y;
 	else if(velocity.y > vel_max.y) velocity.y = vel_max.y;
 
-	if(position.x < 0) position.x = 0; 
+	if(position.x < 0) position.x = 0;
 
 	if(velocity.x != 0) MoveX(velocity.x * delta);
 	if(velocity.y != 0) MoveY(velocity.y * delta);
@@ -111,7 +112,7 @@ void Player::Update(float delta) {
 		gravity = 0.075f;
 		vel_max = {6.5f, 6.5f};
 		vel_min = Vector2Scale(vel_max, -1);
-		
+
 		if (!IsMusicStreamPlaying(plHandler->ap->music[1])) {
 			PlayMusicStream(plHandler->ap->music[1]);
 		}
@@ -120,14 +121,14 @@ void Player::Update(float delta) {
 		if(boost_amount >= boost_init_amount - 1) boost_facing = boost_dest_v;
 
 		velocity = Vector2Add(velocity, Vector2Scale(boost_facing, 0.25f));
-		
+
 		milk_rotation = boost_rotation;
 		milk_facing = boost_facing;
 
 		milk_start = {position.x + 32, position.y + 20};
 		milk_end = Vector2Add(milk_start, Vector2Scale(boost_facing, -2000));
 		if(boost_amount >= boost_init_amount - 1) milk_end = milk_start;
-		
+
 		if(boost_amount <= boost_init_amount - 1) {
 			for(uint16_t i = 0; i < Vector2Distance(milk_start,  milk_end); i += 4) {
 				Vector2 point = Vector2Add(milk_start, Vector2Scale(boost_facing, -i));
@@ -140,7 +141,7 @@ void Player::Update(float delta) {
 
 		decel_timer = 20;
 		DECEL = false;
-		
+
 		if(boost_amount <= 0 || on_ground) {
 			StartFall();
 			boost_init_amount = 0;
@@ -163,11 +164,11 @@ void Player::Draw() {
 	Vector2 draw_pos = {position.x, position.y - 20};
 	if(dir == 'l') draw_flags = (FLIP_X);
 	else if(dir == 'r') draw_flags = 0;
-	
+
 	Vector2 center = Vector2Add(position, {32, 32});
 	float boost_circ_r = ((boost_amount / boost_max) * 100) + 28;
 	//boost_facing = Vector2Rotate(boost_pres_v, boost_rotation * DEG2RAD);
-	
+
 	Vector2 dir_circle = Vector2Scale(boost_dest_v, boost_circ_r);
 	//Vector2 dir_circle = Vector2Rotate(boost_dest_v, boost_rotation * DEG2RAD);
 
@@ -220,9 +221,9 @@ void Player::Draw() {
 		case PLAYER_CHARGE:
 			DrawSprite(ssPtr, draw_pos, 25, draw_flags);
 			//DrawCircleLinesV(Vector2Add(position, {32, 32}), 128, WHITE);
-		
+
 			DrawCircleLinesV(center, boost_circ_r, WHITE);
-			
+
 			//DrawCircleV(Vector2Add(center, Vector2Scale(boost_dest_v, boost_circ_r)), 16, WHITE);
 			DrawCircleV(Vector2Add(center, dir_circle), 16, WHITE);
 
@@ -274,12 +275,12 @@ void Player::MoveY(float amount) {
 			if(HasCollider(_tilemap, {position.x + n, next_y})) {
 				coll = true;
 				break;
-			} 
+			}
 		}
 
 		if(!coll) remain += small_amount;
 		else if(coll) {
-			if(amount > 0) { 
+			if(amount > 0) {
 				on_ground = true;
 				//uint16_t grid_down = grid_pos.r + 1;
 				position.y = GetCollider(_tilemap, grid_pos).y;
@@ -302,8 +303,8 @@ void Player::Collision() {
 		     HasCollider(_tilemap, (Vector2){position.x + 62, position.y + 65}))) {
 			StartFall();
 		} else {
-			last_ground_y = position.y;	
-			if((int)position.y % 64 != 0) position.y = CoordsToVector(_tilemap, grid_pos).y - 1; 
+			last_ground_y = position.y;
+			if((int)position.y % 64 != 0) position.y = CoordsToVector(_tilemap, grid_pos).y - 1;
 			//velocity.y = 0;
 			//boost_amount = 100;
 			boost_amount = 0;
@@ -327,6 +328,7 @@ void Player::StartJump() {
 	gravity = JUMP_GRAV;
 	jumpreq_timer = 0;
 	jump_anim.current_frame = 0;
+	PlaySoundEffect(plHandler->ap, SOUND_JUMP);
 }
 
 void Player::StartFall() {
@@ -337,8 +339,8 @@ void Player::StartFall() {
 
 void Player::InputKB(float delta) {
 	// *KEYBOARD*
-	
-	if(player_state != PLAYER_BOOST) { 
+
+	if(player_state != PLAYER_BOOST) {
 		// HORIZONTAL MOVEMENT
 		if(boost_amount <= 1) {
 			if(IsKeyDown(KEY_A)) {
@@ -372,7 +374,7 @@ void Player::InputKB(float delta) {
 			}
 
 			if(IsKeyReleased(MILK_KEY) || boost_amount >= boost_max) {
-				if(boost_amount <= 1) { 
+				if(boost_amount <= 1) {
 					boost_amount = 0;
 					boost_used = false;
 				} else {
@@ -380,7 +382,7 @@ void Player::InputKB(float delta) {
 					//boost_rotation = 0.0f;
 					//boost_dest_v = {0, -1};
 					//boost_pres_v = {0, -1};
-					
+
 					if(IsKeyDown(KEY_A)) boost_pres_v.x = -1;
 					if(IsKeyDown(KEY_D)) boost_pres_v.x = 1;
 					if(IsKeyDown(KEY_W)) boost_pres_v.y = -1;
@@ -396,7 +398,7 @@ void Player::InputKB(float delta) {
 			}
 		}
 	}
-	
+
 	// JUMP
 	if(player_state == PLAYER_JUMP) {
 		if(IsKeyUp(KEY_SPACE)) gravity = CANC_GRAV;
@@ -411,7 +413,7 @@ void Player::InputKB(float delta) {
 		jump_release = false;
 		jump_release_timer = 1;
 	} else jump_release = true;
-	
+
 	if(player_state == PLAYER_CHARGE) {
 		boost_facing = Vector2Rotate(boost_pres_v, boost_rotation * DEG2RAD);
 
@@ -462,7 +464,7 @@ void Player::InputKB(float delta) {
 		if(boost_dir.y < -1) boost_dir.y = -1;
 		else if(boost_dir.y > 1) boost_dir.y = 1;
 		*/
-		
+
 		boost_pres_v = Vector2Lerp(boost_pres_v, boost_dest_v, delta * 0.085f);
 	}
 
@@ -481,7 +483,7 @@ void Player::ManageTimers(float delta) {
 			if(on_ground) {
 				velocity.x *= 0.9f;
 				decel_timer = 0.5f;
-			} else { 
+			} else {
 				velocity.x *= 0.95f;
 				decel_timer = 1.0f;
 			}
@@ -497,27 +499,27 @@ void Player::ManageTimers(float delta) {
 	else ground_timer = 5;
 
 	if(jump_release) jump_release_timer -= delta;
-	
+
 	damage_timer -= delta;
 }
 
 void Player::UpdateCam(uint8_t ww, uint8_t wh) {
 	_cam->target.x = position.x + 64;
 
-	if(position.y < (last_ground_y + (512)) && position.y >= last_ground_y - (512)) 
+	if(position.y < (last_ground_y + (512)) && position.y >= last_ground_y - (512))
 		_cam->target.y += ((last_ground_y - _cam->target.y)) * (GetFrameTime() * 5);
 	else _cam->target.y += ((position.y) - _cam->target.y) * (GetFrameTime() * 10);
 
-	if(_cam->target.x < _cam->offset.x) 
+	if(_cam->target.x < _cam->offset.x)
 		_cam->target.x = _cam->offset.x;
-	
-	if(_cam->target.x > (_tilemap->width * (TILE_SIZE * _cam->zoom)) - _cam->offset.x) 
+
+	if(_cam->target.x > (_tilemap->width * (TILE_SIZE * _cam->zoom)) - _cam->offset.x)
 		_cam->target.x = (_tilemap->width * (TILE_SIZE * _cam->zoom)) - _cam->offset.x;
-	
-	if(_cam->target.y < _cam->offset.y) 
+
+	if(_cam->target.y < _cam->offset.y)
 		_cam->target.y = _cam->offset.y;
 
-	if(_cam->target.y > ((_tilemap->height) * (TILE_SIZE * _cam->zoom)) - _cam->offset.y) 
+	if(_cam->target.y > ((_tilemap->height) * (TILE_SIZE * _cam->zoom)) - _cam->offset.y)
 		_cam->target.y = ((_tilemap->height) * (TILE_SIZE * _cam->zoom)) - _cam->offset.y;
 
 	/*
@@ -530,6 +532,7 @@ void Player::UpdateCam(uint8_t ww, uint8_t wh) {
 }
 
 void Player::Die() {
+    PlaySoundEffect(plHandler->ap, SOUND_MOONA_DEATH);
 	position = start_pos;
 	velocity = Vector2Zero();
 	player_state = PLAYER_IDLE;
@@ -540,18 +543,18 @@ void Player::Die() {
 
 void Player::TakeDamage() {
 	if(damage_timer <= 0) {
-		HP--;
+	    PlaySoundEffect(plHandler->ap, SOUND_MOONA_DAMAGE);
+	   	HP--;
 		damage_timer = 20;
-		if(HP <= 0) Die(); 	
-	}
-}	
-
-void Player::DrawHealthBar() {
-	PlayAnimation(&hp_gain_anim);
-	
-	for(uint8_t i = 0; i < HP; i++) {
-		//DrawAnimation(&hp_gain_anim, {i * 100.0f, 40.0f}, 0);
-		DrawSprite(&hp_gain_ss, {i * 100.0f, 40.0f}, 0, 0);	
+		if(HP <= 0) Die();
 	}
 }
 
+void Player::DrawHealthBar() {
+	PlayAnimation(&hp_gain_anim);
+
+	for(uint8_t i = 0; i < HP; i++) {
+		//DrawAnimation(&hp_gain_anim, {i * 100.0f, 40.0f}, 0);
+		DrawSprite(&hp_gain_ss, {i * 100.0f, 40.0f}, 0, 0);
+	}
+}

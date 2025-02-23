@@ -5,8 +5,10 @@
 enum SoundEffect{
     SOUND_JUMP,
     SOUND_PICKUP,
-    SOUND_DAMAGE,
-    SOUND_DEATH,
+    SOUND_MOONA_DAMAGE,
+    SOUND_ENEMY_DAMAGE,
+    SOUND_MOONA_DEATH,
+    SOUND_ENEMY_DEATH,
 };
 
 typedef struct {

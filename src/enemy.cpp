@@ -5,6 +5,7 @@
 #include "animation.hpp"
 #include "spritesheet.hpp"
 #include "tilemap.hpp"
+#include "audioPlayer.hpp"
 
 Enemy MakeEnemy(Vector2 position, uint8_t type) {
 	return (Enemy) {
@@ -21,7 +22,7 @@ Enemy MakeEnemy(Vector2 position, uint8_t type) {
 void EnemyUpdate(Enemy *enemy, float dt) {
 	if(dt < 1.0f) enemy->anim.fps = enemy->animFPS * 0.1f;
 	else enemy->anim.fps = enemy->animFPS;
-	
+
 	if(enemy->dead) enemy->velocity = Vector2Zero();
 	enemy->position = Vector2Add(
 		enemy->position,
@@ -47,12 +48,12 @@ void EnemyCollision(Enemy *enemy, Player *player) {
 	if(CheckCollisionRecs(enemy->killbox, player->bounds) && player->velocity.y >= 0) {
 		// ENEMY KILL...
 		//enemy->active = false;
-		enemy->dead = true;	
+		enemy->dead = true;
 		player->velocity.y = -10;
 		player->boost_used = false;
 		player->last_ground_y = enemy->position.y;
-	} 
-	
+	}
+
 	if(CheckCollisionRecs(enemy->bounds, player->bounds) && player->position.y > enemy->position.y)
 		player->TakeDamage();
 }
@@ -68,7 +69,7 @@ void EnemyDamage(Enemy *enemy) {
 }
 
 void EnemyUpdateSpritesheet(Enemy *enemy) {
-	if(enemy->DAMAGE) enemy->ssPtr = enemy->damage_ss;	
+	if(enemy->DAMAGE) enemy->ssPtr = enemy->damage_ss;
 	else enemy->ssPtr = enemy->ss;
 	enemy->anim.ss = enemy->ssPtr;
 }
@@ -77,7 +78,7 @@ void AlienUpdate(Enemy *enemy) {
 	enemy->bounds = (Rectangle) {
 		enemy->position.x + 30,
 		enemy->position.y + 20,
-		20.0f, 64.0f 
+		20.0f, 64.0f
 	};
 
 	enemy->killbox = (Rectangle) {
@@ -86,12 +87,12 @@ void AlienUpdate(Enemy *enemy) {
 		20.0f, 20.0f
 	};
 
-	if(!enemy->dead) { 
+	if(!enemy->dead) {
 		PlayAnimation(&enemy->anim);
 	} else if(enemy->dead) {
 		PlayAnimation(&enemy->death_anim);
 		if(enemy->death_anim.is_done) enemy->active = false;
-	}	
+	}
 }
 
 void AlienDraw(Enemy *enemy) {
@@ -103,7 +104,7 @@ void UfoUpdate(Enemy *enemy) {
 	enemy->bounds = (Rectangle) {
 		enemy->position.x,
 		enemy->position.y,
-		(float)enemy->ss->frame_w, 
+		(float)enemy->ss->frame_w,
 		(float)enemy->ss->frame_h
 	};
 
@@ -119,7 +120,7 @@ void UfoUpdate(Enemy *enemy) {
 		enemy->velocity = Vector2Zero();
 		PlayAnimation(&enemy->death_anim);
 		if(enemy->death_anim.is_done) enemy->active = false;
-	}	
+	}
 }
 
 void UfoDraw(Enemy *enemy) {
@@ -147,14 +148,14 @@ void EnemyWalk(Enemy *enemy, Tilemap *tilemap) {
 		enemy->position.x + (enemy->bounds.width),
 		enemy->position.y + (enemy->bounds.height * 0.5f)
 	};
-	
+
 	if(enemy->dir == 'l') {
 		if(HasCollider(tilemap, wall_l)) {
 			enemy->velocity.x *= -1;
 			enemy->dir = 'r';
 		}
 	} else if(enemy->dir == 'r') {
-		if(HasCollider(tilemap, wall_r)) { 
+		if(HasCollider(tilemap, wall_r)) {
 			enemy->velocity.x *= -1;
 			enemy->dir = 'l';
 		}
@@ -162,6 +163,5 @@ void EnemyWalk(Enemy *enemy, Tilemap *tilemap) {
 }
 
 void EnemyOrbit(Enemy *enemy) {
-	
-}
 
+}
